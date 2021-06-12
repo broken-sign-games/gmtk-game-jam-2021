@@ -1,8 +1,8 @@
 title Unlink Mouse Ver
-author Zachary Barbanell
+author MZCJ
 homepage www.puzzlescript.net
 
-verbose_logging
+(verbose_logging)
 
 mouse_left
 mouse_right
@@ -291,19 +291,115 @@ Overlay (for putting on tiles with both high and low wires) (used to be visual, 
 transparent
 
 WinConCrates
-transparent
+pink
 
 WinConCrosses
-transparent
+pink
+
+WinConRopes
+pink
 
 Temp
 pink
 
-move34lowertag
+lowertag
 pink
 
 move56alttag
 transparent
+
+loc11
+pink
+
+loc21
+pink
+
+loc31
+pink
+
+loc12
+pink
+
+loc22
+pink
+
+loc32
+pink
+
+loc13
+pink
+
+loc23
+pink
+
+loc33
+pink
+
+
+
+TargetCrossVertical
+lightgreen
+.0.0.
+00.00
+.0.0.
+00.00
+.0.0.
+
+TargetCrossHorizontal
+lightgreen
+.0.0.
+00000
+.....
+00000
+.0.0.
+
+TargetUpDown
+lightgreen
+.0.0.
+.0.0.
+.0.0.
+.0.0.
+.0.0.
+
+TargetLeftRight
+lightgreen
+.....
+00000
+.....
+00000
+.....
+
+TargetUpLeft
+lightgreen
+.0.0.
+00.0.
+...0.
+0000.
+.....
+
+TargetUpRight
+lightgreen
+.0.0.
+.0.00
+.0...
+.0000
+.....
+
+TargetDownLeft
+lightgreen
+.....
+0000.
+...0.
+00.0.
+.0.0.
+
+TargetDownRight
+lightgreen
+.....
+.0000
+.0...
+.0.00
+.0.0.
 
 =======
 LEGEND
@@ -314,13 +410,11 @@ LEGEND
 * = CrateTarget
 + = CrossTarget
 O = Crate
-1 = Wall and WinConCrates
-2 = Wall and WinConCrosses
 
 Player = Background (necessary for language reasons)
 
-WinCon = WinConCrates or WinConCrosses
-Target = CrossTarget or CrateTarget
+WinCon = WinConCrates or WinConCrosses or WinConRopes
+Target = CrossTarget or CrateTarget or TargetCrossVertical or TargetCrossHorizontal or TargetUpDown or TargetLeftRight or TargetUpLeft or TargetUpRight or TargetDownLeft or TargetDownRight
 Obstacle = Wall or Crate
 
 CursorActive = CursorActiveStill or CursorActiveMoved
@@ -388,6 +482,22 @@ Decoration = LowDeco or HighDeco
 ╓ = HighDown and HighRight and HighDown_v2 and HighRight_v2
 
 
+╫ = TargetCrossVertical
+╪ = TargetCrossHorizontal
+
+║ = TargetUpDown
+═ = TargetLeftRight
+╝ = TargetUpLeft
+╚ = TargetUpRight
+╗ = TargetDownLeft
+╔ = TargetDownRight
+
+loc = loc11 or loc21 or loc31 or loc12 or loc22 or loc32 or loc13 or loc23 or loc33
+
+KnotA = Up_ or Left_
+KnotB = Down_ or Right_
+
+
 =======
 SOUNDS
 =======
@@ -430,7 +540,8 @@ lmbup
 rmbup
 drag
 Temp
-move34lowertag
+lowertag
+loc
 
 WinCon
 
@@ -582,8 +693,8 @@ right [ moving Right_ | Left_ ] -> [ moving Right_ | moving Left_ ]
 [ > Horizontal_ | LowVertical ] [ > Horizontal_ | HighVertical ] -> cancel
 [ > Vertical_ | LowHorizontal ] [ > Vertical_ | HighHorizontal ] -> cancel
 
-[ > Horizontal_ | LowVertical ] -> [ > Horizontal_ | LowVertical move34lowertag ]
-[ > Vertical_ | LowHorizontal ] -> [ > Vertical_ | LowHorizontal move34lowertag ]
+[ > Horizontal_ | LowVertical ] -> [ > Horizontal_ | LowVertical lowertag ]
+[ > Vertical_ | LowHorizontal ] -> [ > Vertical_ | LowHorizontal lowertag ]
 
 [ > Up_ | no Up_ ] -> cancel
 [ > Down_ | no Down_ ] -> cancel
@@ -610,22 +721,22 @@ right [ no Right_ > Knot | | Knot ] -> cancel
 [ moving Vertical_ Tweak no Overlay ] -> [ moving Vertical_ Tweak Temp ]
 
 up [ > Horizontal_ Temp Up_ | Down_ Up_ | Down_ ] -> [ > Horizontal_ | | ]
-up [ move34lowertag ] [ > Horizontal_ Temp | | ] -> [ move34lowertag ] [ > Horizontal_ HighUp | LowDown LowUp | HighDown ]
+up [ lowertag ] [ > Horizontal_ Temp | | ] -> [ lowertag ] [ > Horizontal_ HighUp | LowDown LowUp | HighDown ]
 up [ > Horizontal_ Temp | | ] -> [ > Horizontal_ HighUp | HighDown HighUp LowLeft LowRight no HighLeft no HighRight | HighDown ]
 
 down [ > Horizontal_ Temp Down_ | Up_ Down_ | Up_ ] -> [ > Horizontal_ | | ]
-down [ move34lowertag ] [ > Horizontal_ Temp | | ] -> [ move34lowertag ] [ > Horizontal_ HighDown | LowUp LowDown | HighUp ]
+down [ lowertag ] [ > Horizontal_ Temp | | ] -> [ lowertag ] [ > Horizontal_ HighDown | LowUp LowDown | HighUp ]
 down [ > Horizontal_ Temp | | ] -> [ > Horizontal_ HighDown | HighUp HighDown LowLeft LowRight no HighLeft no HighRight | HighUp ]
 
 left [ > Vertical_ Temp Left_ | Right_ Left_ | Right_ ] -> [ > Vertical_ | | ]
-left [ move34lowertag ] [ > Vertical_ Temp | | ] -> [ move34lowertag ] [ > Vertical_ HighLeft | LowRight LowLeft | HighRight ]
+left [ lowertag ] [ > Vertical_ Temp | | ] -> [ lowertag ] [ > Vertical_ HighLeft | LowRight LowLeft | HighRight ]
 left [ > Vertical_ Temp | | ] -> [ > Vertical_ HighLeft | HighRight HighLeft LowUp LowDown no HighUp no HighDown | HighRight ]
 
 right [ > Vertical_ Temp Right_ | Left_ Right_ | Left_ ] -> [ > Vertical_ | | ]
-right [ move34lowertag ] [ > Vertical_ Temp | | ] -> [ move34lowertag ] [ > Vertical_ HighRight | LowLeft LowRight | HighLeft ]
+right [ lowertag ] [ > Vertical_ Temp | | ] -> [ lowertag ] [ > Vertical_ HighRight | LowLeft LowRight | HighLeft ]
 right [ > Vertical_ Temp | | ] -> [ > Vertical_ HighRight | HighLeft HighRight LowUp LowDown no HighUp no HighDown | HighLeft ]
 
-[ move34lowertag ] -> [ ]
+[ lowertag ] -> [ ]
 
 
 
@@ -701,6 +812,92 @@ down [ Temp | Temp ] -> [ Temp HighDown | HighUp Temp ]
 
 [ action CursorActive ] -> [ ]
 
+(rest of the moves) (((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))
+
+[ drag no CursorActive | | ] -> [ drag Temp | Temp | Temp ]
+[ CursorActive no loc no Overlay | | Temp ] -> [ CursorActive loc11 | loc12 | loc13 ]
+[ CursorActive no loc ] [ Temp ] -> [ CursorActive ] [ ]
+[ loc11 | | Temp ] -> [ loc11 | loc21 | loc31 ]
+[ loc12 | | Temp ] -> [ loc12 | loc22 | loc32 ]
+[ loc13 | Temp | Temp ] -> [ loc13 | loc23 | loc33 ]
+
+[ CursorActive ] [ drag loc33 ] -> [ ] [ CursorActiveMoved loc33 ]
+
+[ Temp ] -> [ ]
+
+[ loc Up_ ] -> [ loc up Up_ ]
+[ loc Down_ ] -> [ loc down Down_ ]
+[ loc Left_ ] -> [ loc left Left_ ]
+[ loc Right_ ] -> [ loc right Right_ ]
+
+[ loc11 | loc12 parallel Low ] -> [ lowertag loc11 | loc12 parallel low ]
+[ loc11 | loc21 parallel Low ] -> [ lowertag loc11 | loc21 parallel low ]
+
+[ lowertag loc11 | loc12 perpendicular Low ] -> cancel
+[ lowertag loc11 | loc21 perpendicular Low ] -> cancel
+
+[ loc33 Knot ] -> cancel 
+[ loc22 no Knot ] -> cancel (disallow simple corner inversions, could be allowed probably)
+
+[ loc13 | loc23 parallel Knot ] -> cancel
+[ loc31 | loc32 parallel Knot ] -> cancel
+
+[ loc11 > Knot | < KnotA loc12 > KnotB | < Knot loc13 ] -> [ Temp loc11 > Knot | < KnotA loc12 > KnotB | < Knot loc13 ]
+[ loc11 > Knot | < KnotB loc12 > KnotA | < Knot loc13 ] -> [ Temp loc11 > Knot | < KnotB loc12 > KnotA | < Knot loc13 ]
+[ loc11 no Temp ] -> cancel
+[ Temp ] -> [ ]
+
+[ loc11 > Knot | < KnotA loc21 > KnotB | < Knot loc31 ] -> [ Temp loc11 > Knot | < KnotA loc21 > KnotB | < Knot loc31 ]
+[ loc11 > Knot | < KnotB loc21 > KnotA | < Knot loc31 ] -> [ Temp loc11 > Knot | < KnotB loc21 > KnotA | < Knot loc31 ]
+[ loc11 no Temp ] -> cancel
+[ Temp ] -> [ ]
+
+[ loc11 > Knot | < KnotA loc12 > KnotB | < Knot loc13 ] -> [ loc11 | loc12 | loc13 ]
+[ loc11 > Knot | < KnotB loc12 > KnotA | < Knot loc13 ] -> [ loc11 | loc12 | loc13 ]
+[ loc11 > Knot | < KnotA loc21 > KnotB | < Knot loc31 ] -> [ loc11 | loc21 | loc31 ]
+[ loc11 > Knot | < KnotB loc21 > KnotA | < Knot loc31 ] -> [ loc11 | loc21 | loc31 ]
+
+[ loc13 ] -> [ action loc13 ]
+[ loc23 ] -> [ action loc23 ]
+[ loc33 ] -> [ action loc33 ]
+[ loc32 ] -> [ action loc32 ]
+[ loc31 ] -> [ action loc31 ]
+
+up [ action loc | action loc ] -> [ action loc HighUp | action loc HighDown ]
+right [ action loc | action loc ] -> [ action loc HighRight | action loc HighLeft ]
+
+[ lowertag ] [ moving Horizontal_ loc23 stationary HighUp ] -> [ lowertag ] [ moving Horizontal_ loc23 LowUp ]
+[ lowertag ] [ moving Horizontal_ loc23 stationary HighDown ] -> [ lowertag ] [ moving Horizontal_ loc23 LowDown ]
+[ lowertag ] [ moving Vertical_ loc23 stationary HighLeft ] -> [ lowertag ] [ moving Vertical_ loc23 LowLeft ]
+[ lowertag ] [ moving Vertical_ loc23 stationary HighRight ] -> [ lowertag ] [ moving Vertical_ loc23 LowRight ]
+
+[ lowertag ] [ moving Horizontal_ loc32 stationary HighUp ] -> [ lowertag ] [ moving Horizontal_ loc32 LowUp ]
+[ lowertag ] [ moving Horizontal_ loc32 stationary HighDown ] -> [ lowertag ] [ moving Horizontal_ loc32 LowDown ]
+[ lowertag ] [ moving Vertical_ loc32 stationary HighLeft ] -> [ lowertag ] [ moving Vertical_ loc32 LowLeft ]
+[ lowertag ] [ moving Vertical_ loc32 stationary HighRight ] -> [ lowertag ] [ moving Vertical_ loc32 LowRight ]
+
+[ lowertag ] [ loc23 moving Knot ] -> [ lowertag ] [ loc23 Knot ]
+[ lowertag ] [ loc32 moving Knot ] -> [ lowertag ] [ loc32 Knot ]
+
+[ loc23 moving HighUp ] -> [ loc23 LowUp ]
+[ loc23 moving HighDown ] -> [ loc23 LowDown ]
+[ loc23 moving HighLeft ] -> [ loc23 LowLeft ]
+[ loc23 moving HighRight ] -> [ loc23 LowRight ]
+
+[ loc32 moving HighUp ] -> [ loc32 LowUp ]
+[ loc32 moving HighDown ] -> [ loc32 LowDown ]
+[ loc32 moving HighLeft ] -> [ loc32 LowLeft ]
+[ loc32 moving HighRight ] -> [ loc32 LowRight ]
+
+[ moving Knot ] -> [ Knot ]
+
+
+
+[ loc ] -> [ ]
+
+[ lowertag ] -> [ ]
+
+
 
 
 
@@ -719,16 +916,35 @@ late [ LowDown no Overlay ] -> [ HighDown ]
 late [ LowLeft no Overlay ] -> [ HighLeft ]
 late [ LowRight no Overlay ] -> [ HighRight ]
 
+
+
+
+
+
 (win conditions)
-late [ CrateTarget no Crate ] [ WinConCrates ] -> [ CrateTarget ] [ WinConCrates Temp ]
+late [ CrateTarget Crate ] -> [ CrateTarget Crate WinConCrates ]
 
-late [ CrossTarget no Overlay ] [ WinConCrosses ] -> [ CrossTarget ] [ WinConCrosses Temp ]
-late [ Overlay no CrossTarget ] [ WinConCrosses ] -> [ Overlay ] [ WinConCrosses Temp ]
+late [ CrossTarget Overlay ] -> [ CrossTarget Overlay WinConCrosses ]
 
-late [ WinConCrates no Temp ] [ WinCon Temp ] -> [ WinConCrates Temp ] [ WinCon Temp ]
-late [ WinConCrosses no Temp ] [ WinCon Temp ] -> [ WinConCrosses Temp ] [ WinCon Temp ]
-late [ WinCon no Temp ] -> [ WinCon ] win
-late [ Temp ] -> [ ]
+late [ TargetCrossVertical Overlay HighUp ] -> [ TargetCrossVertical Overlay HighUp WinConRopes ]
+late [ TargetCrossHorizontal Overlay HighLeft ] -> [ TargetCrossHorizontal Overlay HighLeft WinConRopes ]
+late [ TargetUpDown HighUp HighDown ] -> [ TargetUpDown HighUp HighDown WinConRopes ]
+late [ TargetLeftRight HighLeft HighRight ] -> [ TargetLeftRight HighLeft HighRight WinConRopes ] 
+late [ TargetUpLeft HighUp HighLeft ] -> [ TargetUpLeft HighUp HighLeft WinConRopes ]
+late [ TargetUpRight HighUp HighRight ] -> [ TargetUpRight HighUp HighRight WinConRopes ]
+late [ TargetDownLeft HighDown HighLeft ] -> [ TargetDownLeft HighDown HighLeft WinConRopes ]
+late [ TargetDownRight HighDown HighRight ] -> [ TargetDownRight HighDown HighRight WinConRopes ]
+
+late [ Overlay no CrossTarget ] [ WinConCrosses ] -> [ Overlay ] [ ]
+
+late [ Target no WinCon ] [ WinCon ] -> [ Target ] [ ]
+
+late [ WinCon ] -> [ ] win
+
+
+
+
+
 
 (update decorations)
 late [ LowUpDeco no LowUp ] -> [ ]
@@ -818,6 +1034,21 @@ WINCONDITIONS
 LEVELS
 =======
 
+
+
+###########
+#.........#
+#.o.....+.#
+#..┌───┐..#
+#..│+═+│..#
+#..│║*║│..#
+#..│+═+│..#
+#..└───┘..#
+#.........#
+#.........#
+###########
+
+
 message Click and drag crates onto the targets.
 
 #########
@@ -828,7 +1059,7 @@ message Click and drag crates onto the targets.
 #...#.o.#
 #.*.#####
 #...#####
-########1
+#########
 
 message Click and drag on the rope to deform it. Ropes are blocked by crates and vice-versa!
 
@@ -840,7 +1071,7 @@ message Click and drag on the rope to deform it. Ropes are blocked by crates and
 #└─┘....#
 #..*....#
 #.......#
-########1
+#########
 
 message Some levels contain cross targets. There must be a rope crossing on each target and no crossings anywhere else.
 
@@ -856,7 +1087,7 @@ message Some levels contain cross targets. There must be a rope crossing on each
 #...........#
 #...........#
 #...........#
-############2
+#############
 
 message Click a corner of the rope to wind it into a tight loop. Click the crossing of a tight loop to unwind it.
 
@@ -868,7 +1099,7 @@ message Click a corner of the rope to wind it into a tight loop. Click the cross
 ####....#
 ####..+.#
 ####....#
-########2
+#########
 
 message Right click the rope to nail it down before dragging in order to create new bends.
 
@@ -880,7 +1111,7 @@ message Right click the rope to nail it down before dragging in order to create 
 #.└───┘.#
 #.*.#.*.#
 #...#...#
-########1
+#########
 
 ###########
 #.........#
@@ -892,7 +1123,7 @@ message Right click the rope to nail it down before dragging in order to create 
 #..└───┘..#
 #...+.+...#
 #.........#
-##########2
+###########
 
 ###############
 #.............#
@@ -908,7 +1139,7 @@ message Right click the rope to nail it down before dragging in order to create 
 #.............#
 #.............#
 #............*#
-##############1
+###############
 
 ###########
 #####┌───┐#
@@ -923,7 +1154,23 @@ message Right click the rope to nail it down before dragging in order to create 
 #└─┘#######
 #...#######
 #...#######
-##########1
+###########
+
+###############
+#.............#
+#.............#
+#.............#
+#.............#
+#..╔═╗...┌─┐..#
+#..║╔╪╗..│┌╂┐.#
+#.╔╫╪╝║.┌┿╂┘│.#
+#.║╚╫═╝.│└┿─┘.#
+#.╚═╝...└─┘...#
+#.............#
+#.............#
+#.............#
+#.............#
+###############
 
 #.#
 ...
