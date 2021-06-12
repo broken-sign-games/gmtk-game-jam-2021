@@ -33,7 +33,6 @@ drag
 pink
 
 
-
 Background
 gray
 
@@ -283,6 +282,9 @@ lightred red darkred
 Overlay (for putting on tiles with both high and low wires) (used to be visual, is now purely for logic)
 transparent
 
+WinConCrates
+transparent
+
 Temp
 pink
 
@@ -300,6 +302,7 @@ LEGEND
 # = Wall
 * = Target
 O = Crate
+1 = Wall and WinConCrates
 
 Player = Background (necessary for language reasons)
 
@@ -414,6 +417,7 @@ drag
 Temp
 move34lowertag
 
+WinConCrates
 
 
 
@@ -779,6 +783,7 @@ late [ HighRight LowLeft ] -> [ Temp ]
 WINCONDITIONS
 ==============
 
+some WinConCrates
 all Target on Crate
 
 
@@ -802,7 +807,6 @@ LEVELS
 #.............#
 #.............#
 ###############
-
 
 ###############
 #.............#
@@ -834,7 +838,23 @@ LEVELS
 #.............#
 #.............#
 #............*#
+##############1
 ###############
+
+###########
+#####┌───┐#
+#...#│.O.│#
+#...#└┐.┌┘#
+#┌─┐##│.│##
+#│*│##│.│##
+#│.└──┿─┘##
+#│O...│..##
+#│.┌──┘..##
+#│*│#######
+#└─┘#######
+#...#######
+#...#######
+##########1
 
 #.#
 ...
