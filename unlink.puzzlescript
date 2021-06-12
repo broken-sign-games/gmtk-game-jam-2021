@@ -577,6 +577,23 @@ lightgreen
 .0.00
 .0.0.
 
+MovableAnchor
+yellow
+.0.0.
+0...0
+.....
+0...0
+.0.0.
+
+StaticAnchor
+darkred
+.0.0.
+0...0
+.....
+0...0
+.0.0.
+
+
 =======
 LEGEND
 =======
@@ -589,11 +606,25 @@ _ = BarrelTarget
 O = Crate
 U = Barrel
 
+i = MovableAnchor and HighUp
+k = MovableAnchor and HighDown
+j = MovableAnchor and HighLeft
+l = MovableAnchor and HighRight
+
+1 = StaticAnchor and HighUp
+2 = StaticAnchor and HighDown
+3 = StaticAnchor and HighLeft
+4 = StaticAnchor and HighRight
+
 Player = Background (necessary for language reasons)
 
 WinCon = WinConCrates or WinConCrosses or WinConRopes
 Target = CrossTarget or CrateTarget or BarrelTarget or TargetCrossVertical or TargetCrossHorizontal or TargetUpDown or TargetLeftRight or TargetUpLeft or TargetUpRight or TargetDownLeft or TargetDownRight
-Obstacle = Wall or Crate or Barrel
+Cratelike = Crate or Barrel
+Anchor = MovableAnchor or StaticAnchor
+Obstacle = Wall or Cratelike or Anchor
+
+
 
 CursorActive = CursorActiveStill or CursorActiveMoved
 
@@ -708,6 +739,8 @@ AboveDeco = abovedecocrate or abovedecobarrel
 
 Isometric = AboveDeco (or BelowDeco)
 
+
+
 =======
 SOUNDS
 =======
@@ -722,8 +755,8 @@ Target
 
 (BelowDeco)
 
-Obstacle
-WallDeco
+
+
 LowUp
 LowDown
 LowLeft
@@ -734,7 +767,8 @@ HighDown
 HighLeft
 HighRight
 
-
+Obstacle
+WallDeco
 
 LowUpDeco
 LowDownDeco
@@ -805,19 +839,43 @@ RULES
 
 (crate and barrel movement) ((((((((((((((((((((((((((((()))))))))))))))))))))))))))))
 
-[ > CursorActive Crate | no Knot no Obstacle ] -> [ | CursorActive Crate ]
-[ > CursorActive Crate ] -> [ CursorActive Crate ]
-[ CursorActive Crate ] [ drag ] -> [ CursorActive Crate ] [ ]
+[ > CursorActive Cratelike | no Knot no Obstacle ] -> [ | CursorActive Cratelike ]
+[ > CursorActive Cratelike ] -> [ CursorActive Cratelike ]
+[ CursorActive Cratelike ] [ drag ] -> [ CursorActive Cratelike ] [ ]
+
+(movable anchor movement )
+
+[ > CursorActive MovableAnchor | no Knot no Obstacle ] -> [ > MovableAnchor | CursorActive ]
+
+up [ > MovableAnchor | ] -> [ HighUp | HighDown MovableAnchor ]
+down [ > MovableAnchor | ] -> [ HighDown | HighUp MovableAnchor ]
+left [ > MovableAnchor | ] -> [ HighLeft | HighRight MovableAnchor ]
+right [ > MovableAnchor | ] -> [ HighRight | HighLeft MovableAnchor ]
 
 
-[ > CursorActive Barrel | no Knot no Obstacle ] -> [ | CursorActive Barrel ]
-[ > CursorActive Barrel ] -> [ CursorActive Barrel ]
-[ CursorActive Barrel ] [ drag ] -> [ CursorActive Barrel ] [ ]
+[ > CursorActive MovableAnchor | no Obstacle no Overlay ] -> [ > MovableAnchor | CursorActive ]
+
+[ up MovableAnchor no HighUp ]  -> cancel
+[ down MovableAnchor no HighDown ] -> cancel
+[ left MovableAnchor no HighLeft ] -> cancel
+[ right MovableAnchor no HighRight ] -> cancel
+
+[ moving MovableAnchor ] -> [ moving MovableAnchor no Knot ]
+
+up [ > MovableAnchor | ] -> [ | no Down_ MovableAnchor ]
+down [ > MovableAnchor | ] -> [ | no Up_ MovableAnchor ]
+left [ > MovableAnchor | ] -> [ | no Right_ MovableAnchor ]
+right [ > MovableAnchor | ] -> [ | no Left_ MovableAnchor ]
+
+
+[ MovableAnchor HighUp ] -> [ MovableAnchor HighUp ]
+[ MovableAnchor HighDown ] -> [ MovableAnchor HighDown ]
+[ MovableAnchor HighLeft ] -> [ MovableAnchor HighLeft ]
+[ MovableAnchor HighRight ] -> [ MovableAnchor HighRight ]
+
 
 
 (standard movement code) ((((((((((((((((((((((((((((()))))))))))))))))))))))))))))
-
-
 
 [ vertical CursorActive Horizontal_ ] -> [ vertical CursorActive vertical Horizontal_ ] 
 [ horizontal CursorActive Vertical_ ] -> [ horizontal CursorActive horizontal Vertical_ ]
@@ -849,13 +907,19 @@ down [ no Down_ > Knot | Knot ] -> cancel
 left [ no Left_ > Knot | Knot ] -> cancel
 right [ no Right_ > Knot | Knot ] -> cancel
 
-[ > Knot | Obstacle ] -> cancel
+up [ > Knot | Obstacle no HighDown ] -> cancel
+down [ > Knot | Obstacle no HighUp ] -> cancel
+left [ > Knot | Obstacle no HighRight ] -> cancel
+right [ > Knot | Obstacle no HighLeft ] -> cancel
 
 [ moving Horizontal_ Vertical_ no Overlay ] -> [ moving Horizontal_ Vertical_ Temp ]
 [ Horizontal_ moving Vertical_ no Overlay ] -> [ Horizontal_ moving Vertical_ Temp ]
 
 [ moving Horizontal_ Tweak no Overlay ] -> [ moving Horizontal_ Tweak Temp ]
 [ moving Vertical_ Tweak no Overlay ] -> [ moving Vertical_ Tweak Temp ]
+
+[ moving Horizontal_ Anchor no Overlay ] -> [ moving Horizontal_ Anchor Temp ]
+[ moving Vertical_ Anchor no Overlay ] -> [ moving Vertical_ Anchor Temp ]
 
 up [ > Horizontal_ Temp Up_ | Down_ ] -> [ > Horizontal_ | ]
 up [ > HighHorizontal Temp | ] -> [ > HighHorizontal HighUp | HighDown ]
@@ -937,13 +1001,20 @@ left [ no Left_ > Knot | | Knot ] -> cancel
 right [ no Right_ > Knot | | Knot ] -> cancel
 
 [ > Knot | Obstacle] -> cancel
-[ > Knot | | Obstacle ] -> cancel
+
+up [ > Knot | | Obstacle no HighDown ] -> cancel
+down [ > Knot | | Obstacle no HighUp ] -> cancel
+left [ > Knot | | Obstacle no HighRight ] -> cancel
+right [ > Knot | | Obstacle no HighLeft ] -> cancel
 
 [ moving Horizontal_ Vertical_ no Overlay ] -> [ moving Horizontal_ Vertical_ Temp ]
 [ Horizontal_ moving Vertical_ no Overlay ] -> [ Horizontal_ moving Vertical_ Temp ]
 
 [ moving Horizontal_ Tweak no Overlay ] -> [ moving Horizontal_ Tweak Temp ]
 [ moving Vertical_ Tweak no Overlay ] -> [ moving Vertical_ Tweak Temp ]
+
+[ moving Horizontal_ Anchor no Overlay ] -> [ moving Horizontal_ Anchor Temp ]
+[ moving Vertical_ Anchor no Overlay ] -> [ moving Vertical_ Anchor Temp ]
 
 up [ > Horizontal_ Temp Up_ | Down_ Up_ | Down_ ] -> [ > Horizontal_ | | ]
 up [ lowertag ] [ > Horizontal_ Temp | | ] -> [ lowertag ] [ > Horizontal_ HighUp | LowDown LowUp | HighDown ]
@@ -1136,10 +1207,10 @@ late [ Tweak | Tweak CursorActive | Tweak ] -> [ Tweak | CursorActive | Tweak ]
 late [ Overlay ] -> [ ]
 late [ High Low ] -> [ High Low Overlay ]
 
-late [ LowUp no Overlay ] -> [ HighUp ]
-late [ LowDown no Overlay ] -> [ HighDown ]
-late [ LowLeft no Overlay ] -> [ HighLeft ]
-late [ LowRight no Overlay ] -> [ HighRight ]
+late [ LowUp no Overlay no Anchor ] -> [ HighUp ]
+late [ LowDown no Overlay no Anchor ] -> [ HighDown ]
+late [ LowLeft no Overlay no Anchor] -> [ HighLeft ]
+late [ LowRight no Overlay no Anchor ] -> [ HighRight ]
 
 
 
@@ -1301,10 +1372,10 @@ late [ HighDown LowUp ] -> [ Temp ]
 late [ HighLeft LowRight ] -> [ Temp ]
 late [ HighRight LowLeft ] -> [ Temp ]
 
-late right [ Right_ | no Left_ ] -> [ Right_ | Temp ]
-late left [ Left_ | no Right_ ] -> [ Left_ | Temp ]
-late down [ Down_ | no Up_ ] -> [ Down_ | Temp ]
-late up [ Up_ | no Down_ ] -> [ Up_ | Temp ]
+late right [ Right_ | no Left_ no Anchor ] -> [ Right_ | Temp ]
+late left [ Left_ | no Right_ no Anchor ] -> [ Left_ | Temp ]
+late down [ Down_ | no Up_ no Anchor ] -> [ Down_ | Temp ]
+late up [ Up_ | no Down_ no Anchor ] -> [ Up_ | Temp ]
 
 
 ==============
@@ -1319,14 +1390,28 @@ LEVELS
 
 #############
 #############
-##..U......##
+##.........##
+##....o....##
+##..┌───┐..##
+##..│...│..##
+##..i...1..##
+##.........##
+##.........##
+##.........##
+##.........##
+#############
+#############
+
+#############
+#############
+##.........##
 ##....o....##
 ##..╒───┐..##
 ##..│╫═╫│..##
 ##..│║*║│..##
 ##..│╫═╫│..##
 ##..└───┘..##
-##._.......##
+##.........##
 ##.........##
 #############
 #############
