@@ -1,0 +1,479 @@
+title Unlink Mouse Ver
+author Zachary Barbanell
+homepage www.puzzlescript.net
+
+verbose_logging
+
+mouse_left
+mouse_right
+mouse_drag
+mouse_up
+
+noundo
+
+========
+OBJECTS
+========
+
+lmb
+pink
+
+rmb
+pink
+
+lmbup
+pink
+
+rmbup
+pink
+
+drag
+pink
+
+
+
+Background
+gray
+
+Selector
+yellow
+0...0
+.....
+.....
+.....
+0...0
+
+CursorActive
+red
+00.00
+0...0
+.....
+0...0
+00.00
+
+Tweak
+orange
+.....
+..0..
+.0.0.
+..0..
+.....
+
+Wall
+black
+.0.0.
+0...0
+.....
+0...0
+.0.0.
+
+HighUp
+white
+..0..
+..0..
+..0..
+.....
+.....
+
+LowUp
+white
+..0..
+.....
+.....
+.....
+.....
+
+HighDown
+white
+.....
+.....
+..0..
+..0..
+..0..
+
+
+LowDown
+white
+.....
+.....
+.....
+.....
+..0..
+
+HighLeft
+white
+.....
+.....
+000..
+.....
+.....
+
+LowLeft
+white
+.....
+.....
+0....
+.....
+.....
+
+HighRight
+white
+.....
+.....
+..000
+.....
+.....
+
+LowRight
+white
+.....
+.....
+....0
+.....
+.....
+
+Overlay (for putting on tiles with both high and low wires) (used to be visual, is now purely for logic)
+transparent
+
+Temp
+pink
+
+move34lowertag
+pink
+
+=======
+LEGEND
+=======
+
+. = Background
+# = Wall
+
+Player = Background (necessary for language reasons)
+
+S = Selector
+
+High = HighUp or HighDown or HighLeft or HighRight
+Low = LowUp or LowDown or LowLeft or LowRight
+
+Knot = High or Low
+
+Up_ = HighUp or LowUp
+Down_ = HighDown or LowDown
+Left_ = HighLeft or LowLeft
+Right_ = HighRight or LowRight
+
+Horizontal_ = Left_ or Right_
+Vertical_ = Up_ or Down_
+
+HighHorizontal = HighLeft or HighRight
+HighVertical = HighUp or HighDown
+
+LowHorizontal = LowLeft or LowRight
+LowVertical = LowUp or LowDown
+
+
+╂ = HighUp and HighDown and Overlay and LowLeft and LowRight
+┿ = HighLeft and HighRight and Overlay and LowUp and LowDown
+
+│ = HighUp and HighDown
+─ = HighLeft and HighRight
+┘ = HighUp and HighLeft
+└ = HighUp and HighRight
+┐ = HighDown and HighLeft
+┌ = HighDown and HighRight
+
+
+=======
+SOUNDS
+=======
+
+
+================
+COLLISIONLAYERS
+================
+
+Background
+Wall
+LowUp
+LowDown
+LowLeft
+LowRight
+Overlay
+HighUp
+HighDown
+HighLeft
+HighRight
+
+
+CursorActive
+Selector
+Tweak
+
+
+lmb
+rmb
+lmbup
+rmbup
+drag
+Temp
+move34lowertag
+
+
+
+======
+RULES
+======
+
+(todo - replace certain cancels with feedback)
+
+[ moving Player ] -> cancel
+
+[ rmb Tweak ] -> [ ]
+[ rmb Knot ] -> [ Tweak Knot ]
+
+[ rmb ] -> [ ]
+
+[ Tweak Overlay ] -> [ Overlay ]
+
+
+[ lmb ] [ CursorActive ] -> [ lmb ] [ ]
+[ lmb Knot ] -> [ CursorActive Knot ]
+[ lmb ] -> [ ]
+
+[ drag Wall ] -> [ lmbup Wall ]
+
+[ CursorActive | drag ] -> [ > CursorActive | ]
+
+[ lmbup ] [ Tweak ] -> [ lmbup ] [ ]
+[ lmbup ] [ CursorActive ] -> [ lmbup ] [ ]
+
+[ lmbup ] -> [ ]
+
+([ drag ] -> [ ])
+
+
+
+(standard movement code) ((((((((((((((((((((((((((((()))))))))))))))))))))))))))))
+
+
+
+[ vertical CursorActive Horizontal_ ] -> [ vertical CursorActive vertical Horizontal_ ] 
+[ horizontal CursorActive Vertical_ ] -> [ horizontal CursorActive horizontal Vertical_ ]
+
+up [ moving Up_ Tweak | no Tweak ] -> [ Up_ Tweak | ]
+down [ moving Down_ Tweak | no Tweak ] -> [ Down_ Tweak | ]
+left [ moving Left_ Tweak | no Tweak ] -> [ Left_ Tweak | ]
+right [ moving Right_ Tweak | no Tweak ] -> [ Right_ Tweak | ]
+
+up [ moving Up_ | Down_ ] -> [ moving Up_ | moving Down_ ]
++ [ moving Down_ Up_ no Tweak ] -> [ moving Down_ moving Up_ ]
+
+down [ moving Down_ | Up_ ] -> [ moving Down_ | moving Up_ ]
++ [ moving Up_ Down_ no Tweak ] -> [ moving Up_ moving Down_ ]
+
+left [ moving Left_ | Right_ ] -> [ moving Left_ | moving Right_ ]
++ [ moving Right_ Left_ no Tweak ] -> [ moving Right_ moving Left_ ]
+
+right [ moving Right_ | Left_ ] -> [ moving Right_ | moving Left_ ]
++ [ moving Left_ Right_ no Tweak ] -> [ moving Left_ moving Right_ ]
+
+[ > Up_ | Up_ ] -> cancel
+[ > Down_ | Down_ ] -> cancel
+[ > Left_ | Left_ ] -> cancel
+[ > Right_ | Right_ ] -> cancel
+
+up [ no Up_ > Knot | Knot ] -> cancel
+down [ no Down_ > Knot | Knot ] -> cancel
+left [ no Left_ > Knot | Knot ] -> cancel
+right [ no Right_ > Knot | Knot ] -> cancel
+
+[ > Knot | Wall] -> cancel
+
+[ moving Horizontal_ Vertical_ no Overlay ] -> [ moving Horizontal_ Vertical_ Temp ]
+[ Horizontal_ moving Vertical_ no Overlay ] -> [ Horizontal_ moving Vertical_ Temp ]
+
+[ moving Horizontal_ Tweak no Overlay ] -> [ moving Horizontal_ Tweak Temp ]
+[ moving Vertical_ Tweak no Overlay ] -> [ moving Vertical_ Tweak Temp ]
+
+up [ > Horizontal_ Temp Up_ | Down_ ] -> [ > Horizontal_ | ]
+up [ > HighHorizontal Temp | ] -> [ > HighHorizontal HighUp | HighDown ]
+up [ > LowHorizontal Temp | ] -> [ > LowHorizontal LowUp | LowDown ]
+
+down [ > Horizontal_ Temp Down_ | Up_ ] -> [ > Horizontal_ | ]
+down [ > HighHorizontal Temp | ] -> [ > HighHorizontal HighDown | HighUp ]
+down [ > LowHorizontal Temp | ] -> [ > LowHorizontal LowDown | LowUp ]
+
+left [ > Vertical_ Temp Left_ | Right_ ] -> [ > Vertical_ | ]
+left [ > HighVertical Temp | ] -> [ > HighVertical HighLeft | HighRight ]
+left [ > LowVertical Temp | ] -> [ > LowVertical LowLeft | LowRight ]
+
+right [ > Vertical_ Temp Right_ | Left_ ] -> [ > Vertical_ | ]
+right [ > HighVertical Temp | ] -> [ > HighVertical HighRight | HighLeft ]
+right [ > LowVertical Temp | ] -> [ > LowVertical LowRight | LowLeft ]
+
+[ Overlay > High | HighUp ] -> [ Overlay > High | LowUp ]
+[ Overlay > High | HighDown ] -> [ Overlay > High | LowDown ]
+[ Overlay > High | HighLeft ] -> [ Overlay > High | LowLeft ]
+[ Overlay > High | HighRight ] -> [ Overlay > High | LowRight ]
+
+[ Overlay > Low | LowUp ] -> [ Overlay > Low | HighUp ]
+[ Overlay > Low | LowDown ] -> [ Overlay > Low | HighDown ]
+[ Overlay > Low | LowLeft ] -> [ Overlay > Low | HighLeft ]
+[ Overlay > Low | LowRight ] -> [ Overlay > Low | HighRight ]
+
+[ > Knot | ] -> [ | Knot ]
+[ > CursorActive | ] -> [ | CursorActive]
+
+(moves 3 + 4) ((((((((((((((((((((((((((((()))))))))))))))))))))))))))))
+
+[ CursorActive | | drag ] -> [ > CursorActive | | ]
+
+[ vertical CursorActive Horizontal_ ] -> [ vertical CursorActive vertical Horizontal_ ] 
+[ horizontal CursorActive Vertical_ ] -> [ horizontal CursorActive horizontal Vertical_ ]
+
+up [ moving Up_ Tweak | no Tweak ] -> [ Up_ Tweak | ]
+down [ moving Down_ Tweak | no Tweak ] -> [ Down_ Tweak | ]
+left [ moving Left_ Tweak | no Tweak ] -> [ Left_ Tweak | ]
+right [ moving Right_ Tweak | no Tweak ] -> [ Right_ Tweak | ]
+
+up [ moving Up_ | Down_ ] -> [ moving Up_ | moving Down_ ]
++ [ moving Down_ Up_ no Tweak ] -> [ moving Down_ moving Up_ ]
+
+down [ moving Down_ | Up_ ] -> [ moving Down_ | moving Up_ ]
++ [ moving Up_ Down_ no Tweak ] -> [ moving Up_ moving Down_ ]
+
+left [ moving Left_ | Right_ ] -> [ moving Left_ | moving Right_ ]
++ [ moving Right_ Left_ no Tweak ] -> [ moving Right_ moving Left_ ]
+
+right [ moving Right_ | Left_ ] -> [ moving Right_ | moving Left_ ]
++ [ moving Left_ Right_ no Tweak ] -> [ moving Left_ moving Right_ ]
+
+[ moving Knot Overlay ] -> cancel
+
+[ > Horizontal_ | Vertical_ no Overlay ] -> cancel
+[ > Vertical_ | Horizontal_ no Overlay ] -> cancel
+
+[ > Horizontal_ | LowVertical ] [ > Horizontal_ | HighVertical ] -> cancel
+[ > Vertical_ | LowHorizontal ] [ > Vertical_ | HighHorizontal ] -> cancel
+
+[ > Horizontal_ | LowVertical ] -> [ > Horizontal_ | LowVertical move34lowertag ]
+[ > Vertical_ | LowHorizontal ] -> [ > Vertical_ | LowHorizontal move34lowertag ]
+
+[ > Up_ | no Up_ ] -> cancel
+[ > Down_ | no Down_ ] -> cancel
+[ > Left_ | no Left_ ] -> cancel
+[ > Right_ | no Right_ ] -> cancel
+
+[ > Up_ | | Up_ ] -> cancel
+[ > Down_ | | Down_ ] -> cancel
+[ > Left_ | | Left_ ] -> cancel
+[ > Right_ | | Right_ ] -> cancel
+
+up [ no Up_ > Knot | | Knot ] -> cancel
+down [ no Down_ > Knot | | Knot ] -> cancel
+left [ no Left_ > Knot | | Knot ] -> cancel
+right [ no Right_ > Knot | | Knot ] -> cancel
+
+[ > Knot | | Wall ] -> cancel
+
+[ moving Horizontal_ Vertical_ no Overlay ] -> [ moving Horizontal_ Vertical_ Temp ]
+[ Horizontal_ moving Vertical_ no Overlay ] -> [ Horizontal_ moving Vertical_ Temp ]
+
+[ moving Horizontal_ Tweak no Overlay ] -> [ moving Horizontal_ Tweak Temp ]
+[ moving Vertical_ Tweak no Overlay ] -> [ moving Vertical_ Tweak Temp ]
+
+up [ > Horizontal_ Temp Up_ | Down_ Up_ | Down_ ] -> [ > Horizontal_ | | ]
+up [ move34lowertag ] [ > Horizontal_ Temp | | ] -> [ move34lowertag ] [ > Horizontal_ HighUp | LowDown LowUp | HighDown ]
+up [ > Horizontal_ Temp | | ] -> [ > Horizontal_ HighUp | HighDown HighUp LowLeft LowRight no HighLeft no HighRight | HighDown ]
+
+down [ > Horizontal_ Temp Down_ | Up_ Down_ | Up_ ] -> [ > Horizontal_ | | ]
+down [ move34lowertag ] [ > Horizontal_ Temp | | ] -> [ move34lowertag ] [ > Horizontal_ HighDown | LowUp LowDown | HighUp ]
+down [ > Horizontal_ Temp | | ] -> [ > Horizontal_ HighDown | HighUp HighDown LowLeft LowRight no HighLeft no HighRight | HighUp ]
+
+left [ > Vertical_ Temp Left_ | Right_ Left_ | Right_ ] -> [ > Vertical_ | | ]
+left [ move34lowertag ] [ > Vertical_ Temp | | ] -> [ move34lowertag ] [ > Vertical_ HighLeft | LowRight LowLeft | HighRight ]
+left [ > Vertical_ Temp | | ] -> [ > Vertical_ HighLeft | HighRight HighLeft LowUp LowDown no HighUp no HighDown | HighRight ]
+
+right [ > Vertical_ Temp Right_ | Left_ Right_ | Left_ ] -> [ > Vertical_ | | ]
+right [ move34lowertag ] [ > Vertical_ Temp | | ] -> [ move34lowertag ] [ > Vertical_ HighRight | LowLeft LowRight | HighLeft ]
+right [ > Vertical_ Temp | | ] -> [ > Vertical_ HighRight | HighLeft HighRight LowUp LowDown no HighUp no HighDown | HighLeft ]
+
+[ move34lowertag ] -> [ ]
+
+
+
+[ > Knot | | ] -> [ | | Knot ]
+[ > CursorActive | | ] -> [ | | CursorActive ]
+
+
+ 
+
+
+
+
+
+
+
+
+
+(((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))
+
+late [ drag ] -> [ ]
+
+late [ Tweak no Knot ] -> [ ]
+late [ Tweak | Tweak CursorActive | Tweak ] -> [ Tweak | CursorActive | Tweak ] 
+
+late [ Overlay ] -> [ ]
+late [ High Low ] -> [ High Low Overlay ]
+
+late [ LowUp no Overlay ] -> [ HighUp ]
+late [ LowDown no Overlay ] -> [ HighDown ]
+late [ LowLeft no Overlay ] -> [ HighLeft ]
+late [ LowRight no Overlay ] -> [ HighRight ]
+
+
+(debug - should never happen, but might be hard to notice if they do)
+(if these are messages weird stuff happens, don't make them messages )
+
+
+late [ HighUp LowUp ] -> [ Temp ]
+late [ HighDown LowDown ] -> [ Temp ]
+late [ HighLeft LowLeft ] -> [ Temp ]
+late [ HighRight LowRight ] -> [ Temp ]
+
+late [ HighUp LowDown ] -> [ Temp ]
+late [ HighDown LowUp ] -> [ Temp ]
+late [ HighLeft LowRight ] -> [ Temp ]
+late [ HighRight LowLeft ] -> [ Temp ]
+
+
+==============
+WINCONDITIONS
+==============
+
+
+
+=======
+LEVELS
+=======
+
+
+###############
+#.............#
+#.............#
+#.............#
+#.............#
+#.....┌┐......#
+#....┌╂┿┐.....#
+#....│└╂┘.....#
+#....└─┘......#
+#.............#
+#.............#
+#.............#
+#.............#
+#.............#
+###############
+
+#.#
+...
+#.#
