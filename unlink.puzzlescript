@@ -132,6 +132,71 @@ white
 .....
 .....
 
+HighUp_v1
+lightblue blue darkblue
+..0..
+..1..
+..2..
+.....
+.....
+
+LowUp_v1
+lightblue blue darkblue
+..0..
+.....
+.....
+.....
+.....
+
+HighDown_v1
+lightblue blue darkblue
+.....
+.....
+..2..
+..0..
+..1..
+
+
+LowDown_v1
+lightblue blue darkblue
+.....
+.....
+.....
+.....
+..1..
+
+HighLeft_v1
+lightblue blue darkblue
+.....
+.....
+012..
+.....
+.....
+
+LowLeft_v1
+lightblue blue darkblue
+.....
+.....
+0....
+.....
+.....
+
+HighRight_v1
+lightblue blue darkblue
+.....
+.....
+..201
+.....
+.....
+
+LowRight_v1
+lightblue blue darkblue
+.....
+.....
+....1
+.....
+.....
+
 Overlay (for putting on tiles with both high and low wires) (used to be visual, is now purely for logic)
 transparent
 
@@ -174,16 +239,37 @@ HighVertical = HighUp or HighDown
 LowHorizontal = LowLeft or LowRight
 LowVertical = LowUp or LowDown
 
+Left_v1 = LowLeft_v1 or HighLeft_v1
+Right_v1 = LowRight_v1 or HighRight_v1
+Up_v1 = LowUp_v1 or HighUp_v1
+Down_v1 = LowDown_v1 or HighDown_v1
 
-╂ = HighUp and HighDown and Overlay and LowLeft and LowRight
-┿ = HighLeft and HighRight and Overlay and LowUp and LowDown
+Low_v1 = LowUp_v1 or LowDown_v1 or LowLeft_v1 or LowRight_v1
+High_v1 = HighUp_v1 or HighDown_v1 or HighLeft_v1 or HighRight_v1
 
-│ = HighUp and HighDown
-─ = HighLeft and HighRight
-┘ = HighUp and HighLeft
-└ = HighUp and HighRight
-┐ = HighDown and HighLeft
-┌ = HighDown and HighRight
+LowUpDeco = LowUp_v1
+LowDownDeco = LowDown_v1
+LowLeftDeco = LowLeft_v1
+LowRightDeco = LowRight_v1
+HighUpDeco = HighUp_v1
+HighDownDeco = HighDown_v1
+HighLeftDeco = HighLeft_v1
+HighRightDeco = HighRight_v1
+
+LowDeco = Low_v1
+HighDeco = High_v1
+Decoration = LowDeco or HighDeco
+
+
+╂ = HighUp and HighDown and Overlay and LowLeft and LowRight and HighUp_v1 and HighDown_v1 and Overlay and LowLeft_v1 and LowRight_v1
+┿ = HighLeft and HighRight and Overlay and LowUp and LowDown and HighLeft_v1 and HighRight_v1 and Overlay and LowUp_v1 and LowDown_v1
+
+│ = HighUp and HighDown and HighUp_v1 and HighDown_v1
+─ = HighLeft and HighRight and HighLeft_v1 and HighRight_v1
+┘ = HighUp and HighLeft and HighUp_v1 and HighLeft_v1
+└ = HighUp and HighRight and HighUp_v1 and HighRight_v1
+┐ = HighDown and HighLeft and HighDown_v1 and HighLeft_v1
+┌ = HighDown and HighRight and HighDown_v1 and HighRight_v1
 
 
 =======
@@ -206,6 +292,15 @@ HighUp
 HighDown
 HighLeft
 HighRight
+
+LowUp_v1
+LowDown_v1
+LowLeft_v1
+LowRight_v1
+HighUp_v1
+HighDown_v1
+HighLeft_v1
+HighRight_v1
 
 
 CursorActive
@@ -499,6 +594,41 @@ late [ LowUp no Overlay ] -> [ HighUp ]
 late [ LowDown no Overlay ] -> [ HighDown ]
 late [ LowLeft no Overlay ] -> [ HighLeft ]
 late [ LowRight no Overlay ] -> [ HighRight ]
+
+(update decorations)
+late [ LowUpDeco no LowUp ] -> [ ]
+late [ LowDownDeco no LowDown ] -> [ ]
+late [ LowLeftDeco no LowLeft ] -> [ ]
+late [ LowRightDeco no LowRight ] -> [ ]
+late [ HighUpDeco no HighUp ] -> [ ]
+late [ HighDownDeco no HighDown ] -> [ ]
+late [ HighLeftDeco no HighLeft ] -> [ ]
+late [ HighRightDeco no HighRight ] -> [ ]
+
+late [ LowUp_v1 LowDown ] -> [ LowUp_v1 LowDown LowDown_v1 ]
++ late [ LowDown_v1 LowUp ] -> [ LowDown_v1 LowUp LowUp_v1 ]
++ late [ LowLeft_v1 LowRight ] -> [ LowLeft_v1 LowRight LowRight_v1 ]
++ late [ LowRight_v1 LowLeft ] -> [ LowRight_v1 LowLeft LowLeft_v1 ]
++ late [ HighUp_v1 HighDown ] -> [ HighUp_v1 HighDown HighDown_v1 ]
++ late [ HighUp_v1 HighLeft ] -> [ HighUp_v1 HighLeft HighLeft_v1 ]
++ late [ HighUp_v1 HighRight ] -> [ HighUp_v1 HighRight HighRight_v1 ]
++ late [ HighDown_v1 HighUp ] -> [ HighDown_v1 HighUp HighUp_v1 ]
++ late [ HighDown_v1 HighLeft ] -> [ HighDown_v1 HighLeft HighLeft_v1 ]
++ late [ HighDown_v1 HighRight ] -> [ HighDown_v1 HighRight HighRight_v1 ]
++ late [ HighLeft_v1 HighRight ] -> [ HighLeft_v1 HighRight HighRight_v1 ]
++ late [ HighLeft_v1 HighUp ] -> [ HighLeft_v1 HighUp HighUp_v1 ]
++ late [ HighLeft_v1 HighDown ] -> [ HighLeft_v1 HighDown HighDown_v1 ]
++ late [ HighRight_v1 HighLeft ] -> [ HighRight_v1 HighLeft HighLeft_v1 ]
++ late [ HighRight_v1 HighUp ] -> [ HighRight_v1 HighUp HighUp_v1 ]
++ late [ HighRight_v1 HighDown ] -> [ HighRight_v1 HighDown HighDown_v1 ]
++ late right [ Right_v1 | HighLeft ] -> [ Right_v1 | HighLeft HighLeft_v1 ]
++ late right [ Right_v1 | LowLeft ] -> [ Right_v1 | LowLeft LowLeft_v1 ]
++ late left [ Left_v1 | HighRight ] -> [ Left_v1 | HighRight HighRight_v1 ]
++ late left [ Left_v1 | LowRight ] -> [ Left_v1 | LowRight LowRight_v1 ]
++ late down [ Down_v1 | HighUp ] -> [ Down_v1 | HighUp HighUp_v1 ]
++ late down [ Down_v1 | LowUp ] -> [ Down_v1 | LowUp LowUp_v1 ]
++ late up [ Up_v1 | HighDown ] -> [ Up_v1 | HighDown HighDown_v1 ]
++ late up [ Up_v1 | LowDown ] -> [ Up_v1 | LowDown LowDown_v1 ]
 
 
 (debug - should never happen, but might be hard to notice if they do)
