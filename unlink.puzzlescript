@@ -34,7 +34,7 @@ pink
 
 
 Background
-gray
+#9E6337
 
 CursorActiveStill
 red
@@ -61,28 +61,74 @@ orange
 .....
 
 Wall
-black
+#89E5FF
+
+Wall_v1
+#C9F2FF
+.....
+..0..
 .0.0.
 0...0
 .....
-0...0
+
+Wall_v2
+#C9F2FF
+.....
+..0..
 .0.0.
+.....
+.....
+
+Wall_v3
+transparent
+
+abovedecocrate
+#51301B #7A4B2A #9E6337
+.....
+.....
+.....
+00000
+01110
 
 Crate
-orange
+#51301B #7A4B2A #9E6337
 00000
-0...0
-0...0
-0...0
+02210
+02120
+01220
 00000
 
+abovedecobarrel
+#51301B #7A4B2A #9E6337
+.....
+.....
+.....
+.000.
+01110
+
+Barrel
+#51301B #7A4B2A #9E6337
+10001
+12121
+12121
+02120
+.000.
+
 CrateTarget
-Purple
+#51301B
 .....
-.000.
 .0.0.
-.000.
+..0..
+.0.0.
 .....
+
+BarrelTarget
+#51301B
+.....
+.....
+.000.
+0...0
+.000.
 
 CrossTarget
 Purple
@@ -408,14 +454,16 @@ LEGEND
 . = Background
 # = Wall
 * = CrateTarget
+_ = BarrelTarget
 + = CrossTarget
 O = Crate
+U = Barrel
 
 Player = Background (necessary for language reasons)
 
 WinCon = WinConCrates or WinConCrosses or WinConRopes
-Target = CrossTarget or CrateTarget or TargetCrossVertical or TargetCrossHorizontal or TargetUpDown or TargetLeftRight or TargetUpLeft or TargetUpRight or TargetDownLeft or TargetDownRight
-Obstacle = Wall or Crate
+Target = CrossTarget or CrateTarget or BarrelTarget or TargetCrossVertical or TargetCrossHorizontal or TargetUpDown or TargetLeftRight or TargetUpLeft or TargetUpRight or TargetDownLeft or TargetDownRight
+Obstacle = Wall or Crate or Barrel
 
 CursorActive = CursorActiveStill or CursorActiveMoved
 
@@ -467,6 +515,8 @@ LowDeco = Low_v1 or Low_v2
 HighDeco = High_v1 or High_v2
 Decoration = LowDeco or HighDeco
 
+WallDeco = Wall_v1 or Wall_v2 or Wall_v3
+
 
 ╂ = HighUp and HighDown and Overlay and LowLeft and LowRight
 ┿ = HighLeft and HighRight and Overlay and LowUp and LowDown
@@ -497,6 +547,10 @@ loc = loc11 or loc21 or loc31 or loc12 or loc22 or loc32 or loc13 or loc23 or lo
 KnotA = Up_ or Left_
 KnotB = Down_ or Right_
 
+AboveDeco = abovedecocrate or abovedecobarrel
+(BelowDeco = )
+
+Isometric = AboveDeco (or BelowDeco)
 
 =======
 SOUNDS
@@ -509,7 +563,11 @@ COLLISIONLAYERS
 
 Background
 Target
+
+(BelowDeco)
+
 Obstacle
+WallDeco
 LowUp
 LowDown
 LowLeft
@@ -520,6 +578,8 @@ HighDown
 HighLeft
 HighRight
 
+
+
 LowUpDeco
 LowDownDeco
 LowLeftDeco
@@ -528,6 +588,9 @@ HighUpDeco
 HighDownDeco
 HighLeftDeco
 HighRightDeco
+
+
+AboveDeco
 
 CursorActive
 Tweak
@@ -565,6 +628,7 @@ RULES
 [ lmb ] [ CursorActive ] -> [ lmb ] [ ]
 [ lmb Knot ] -> [ CursorActiveStill Knot ]
 [ lmb Crate ] -> [ CursorActiveStill Crate ]
+[ lmb Barrel ] -> [ CursorActiveStill Barrel ]
 [ lmb ] -> [ ]
 
 [ drag Wall ] -> [ lmbup Wall ]
@@ -583,11 +647,16 @@ RULES
 ([ drag ] -> [ ])
 
 
-(crate movement) ((((((((((((((((((((((((((((()))))))))))))))))))))))))))))
+(crate and barrel movement) ((((((((((((((((((((((((((((()))))))))))))))))))))))))))))
 
 [ > CursorActive Crate | no Knot no Obstacle ] -> [ | CursorActive Crate ]
 [ > CursorActive Crate ] -> [ CursorActive Crate ]
 [ CursorActive Crate ] [ drag ] -> [ CursorActive Crate ] [ ]
+
+
+[ > CursorActive Barrel | no Knot no Obstacle ] -> [ | CursorActive Barrel ]
+[ > CursorActive Barrel ] -> [ CursorActive Barrel ]
+[ CursorActive Barrel ] [ drag ] -> [ CursorActive Barrel ] [ ]
 
 
 (standard movement code) ((((((((((((((((((((((((((((()))))))))))))))))))))))))))))
@@ -923,6 +992,7 @@ late [ LowRight no Overlay ] -> [ HighRight ]
 
 (win conditions)
 late [ CrateTarget Crate ] -> [ CrateTarget Crate WinConCrates ]
+late [ BarrelTarget Barrel ] -> [ BarrelTarget Barrel WinConCrates ]
 
 late [ CrossTarget Overlay ] -> [ CrossTarget Overlay WinConCrosses ]
 
@@ -943,10 +1013,16 @@ late [ WinCon ] -> [ ] win
 
 
 
+(iso decorations)
+late [ Isometric ] -> [ ]
 
+late up [ Crate | ] -> [ Crate | abovedecocrate ]
+late up [ Barrel | ] -> [ Barrel | abovedecobarrel ]
 
 
 (update decorations)
+late [ Wall no WallDeco ] -> [ Wall random WallDeco ]
+
 late [ LowUpDeco no LowUp ] -> [ ]
 late [ LowDownDeco no LowDown ] -> [ ]
 late [ LowLeftDeco no LowLeft ] -> [ ]
@@ -1036,175 +1112,194 @@ LEVELS
 
 
 
-###########
-#.........#
-#.o.....+.#
-#..┌───┐..#
-#..│+═+│..#
-#..│║*║│..#
-#..│+═+│..#
-#..└───┘..#
-#.........#
-#.........#
-###########
+#############
+#############
+##..U......##
+##....o....##
+##..┌───┐..##
+##..│╫═╫│..##
+##..│║*║│..##
+##..│╫═╫│..##
+##..└───┘..##
+##._.......##
+##.........##
+#############
+#############
 
+#################
+#################
+##.............##
+##........┌─┐..##
+##........│┌╂┐.##
+##.......┌┿╂┘│.##
+##.......│└┿─┘.##
+##.......└─┘...##
+##.............##
+##...╔═╗.......##
+##.╔═╫╗║.......##
+##.║╔╪╫╝.......##
+##.╚╪╝║........##
+##..╚═╝........##
+##.............##
+#################
+#################
 
 message Click and drag crates onto the targets.
 
-#########
-#...#####
-#.o.#####
-#...#.o.#
-###*..*.#
-#...#.o.#
-#.*.#####
-#...#####
-#########
+###########
+###########
+##...######
+##.o.######
+##...#.o.##
+####*..*.##
+##...#.o.##
+##.*.######
+##...######
+###########
+###########
 
 message Click and drag on the rope to deform it. Ropes are blocked by crates and vice-versa!
 
-#########
-#..┌─┐..#
-#..│o│..#
-#┌─╂─┘*.#
-#│o│....#
-#└─┘....#
-#..*....#
-#.......#
-#########
+###########
+###########
+##..┌─┐..##
+##..│o│..##
+##┌─╂─┘*.##
+##│o│....##
+##└─┘....##
+##..*....##
+##.......##
+###########
+###########
 
 message Some levels contain cross targets. There must be a rope crossing on each target and no crossings anywhere else.
 
-#############
-#...........#
-#...........#
-#...........#
-#....╒──┐...#
-#...╓╂─┐│...#
-#.+.││.││.+.#
-#...│└─╂┘...#
-#...└──┘....#
-#...........#
-#...........#
-#...........#
-#############
+###############
+###############
+##...........##
+##...........##
+##...........##
+##....╒──┐...##
+##...╓╂─┐│...##
+##.+.││.││.+.##
+##...│└─╂┘...##
+##...└──┘....##
+##...........##
+##...........##
+##...........##
+###############
+###############
 
 message Click a corner of the rope to wind it into a tight loop. Click the crossing of a tight loop to unwind it.
 
-#########
-#┌┐..####
-#└┘..####
-#....####
-#.......#
-####....#
-####..+.#
-####....#
-#########
+###########
+###########
+##┌┐..#####
+##└┘..#####
+##....#####
+##.......##
+#####....##
+#####..+.##
+#####....##
+###########
+###########
 
 message Right click the rope to nail it down before dragging in order to create new bends.
 
-#########
-###...###
-###.*.###
-#.┌───┐.#
-#.│ooo│.#
-#.└───┘.#
-#.*.#.*.#
-#...#...#
-#########
-
 ###########
-#.........#
-#...+.+...#
-#..╒───┐..#
-#.+│╓─┐│+.#
-#..││.││..#
-#.+│└─┘│+.#
-#..└───┘..#
-#...+.+...#
-#.........#
+###########
+####...####
+####.*.####
+##.┌───┐.##
+##.│ooo│.##
+##.└───┘.##
+##.*.#.*.##
+##...#...##
+###########
 ###########
 
-###############
-#.............#
-#.............#
-#....┌──┐.....#
-#....│┌─╂┐....#
-#....││O││....#
-#....│└┐││....#
-#...┌┘┌┿┘│....#
-#..┌╂─┿┿─┘....#
-#..└╂─┘│......#
-#...└──┘......#
-#.............#
-#.............#
-#............*#
-###############
+#############
+#############
+##.........##
+##...+.+...##
+##..╒───┐..##
+##.+│╓─┐│+.##
+##..││.││..##
+##.+│└─┘│+.##
+##..└───┘..##
+##...+.+...##
+##.........##
+#############
+#############
 
-###########
-#####┌───┐#
-#...#│.O.│#
-#...#└┐.┌┘#
-#┌─┐##│.│##
-#│*│##│.│##
-#│.└──┿─┘##
-#│O...│..##
-#│.┌──┘..##
-#│*│#######
-#└─┘#######
-#...#######
-#...#######
-###########
+#################
+#################
+##.............##
+##.............##
+##....┌──┐.....##
+##....│┌─╂┐....##
+##....││O││....##
+##....│└┐││....##
+##...┌┘┌┿┘│....##
+##..┌╂─┿┿─┘....##
+##..└╂─┘│......##
+##...└──┘......##
+##.............##
+##.............##
+##............*##
+#################
+#################
 
-###############
-#.............#
-#.............#
-#.............#
-#.............#
-#..╔═╗...┌─┐..#
-#..║╔╪╗..│┌╂┐.#
-#.╔╫╪╝║.┌┿╂┘│.#
-#.║╚╫═╝.│└┿─┘.#
-#.╚═╝...└─┘...#
-#.............#
-#.............#
-#.............#
-#.............#
-###############
+#############
+#############
+######┌───┐##
+##...#│.O.│##
+##...#└┐.┌┘##
+##┌─┐##│.│###
+##│*│##│.│###
+##│.└──┿─┘###
+##│O...│..###
+##│.┌──┘..###
+##│*│########
+##└─┘########
+##...########
+##...########
+#############
+#############
 
-#.#
-...
-#.#
+##.##
+#...#
+##.##
 
 
-###############
-#.............#
-#.............#
-#.............#
-#.............#
-#.....┌┐......#
-#....┌╂┿┐.....#
-#....│└╂┘.....#
-#....└─┘......#
-#.............#
-#.............#
-#.............#
-#.............#
-#.............#
-###############
+#################
+##.............##
+##.............##
+##.............##
+##.............##
+##.....┌┐......##
+##....┌╂┿┐.....##
+##....│└╂┘.....##
+##....└─┘......##
+##.............##
+##.............##
+##.............##
+##.............##
+##.............##
+#################
 
-###############
-#.............#
-#.............#
-#...┌──┐......#
-#...│.╓╂─┐....#
-#...│╒╂┿┐│....#
-#...└╂┿┘││....#
-#....│└─┿┘....#
-#....└──┘.....#
-#.............#
-#.............#
-#.............#
-#.............#
-#.............#
-###############
+#################
+##.............##
+##.............##
+##...┌──┐......##
+##...│.╓╂─┐....##
+##...│╒╂┿┐│....##
+##...└╂┿┘││....##
+##....│└─┿┘....##
+##....└──┘.....##
+##.............##
+##.............##
+##.............##
+##.............##
+##.............##
+#################
