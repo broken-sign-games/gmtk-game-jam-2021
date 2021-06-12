@@ -9,7 +9,7 @@ mouse_right
 mouse_drag
 mouse_up
 
-noundo
+(noundo)
 
 ========
 OBJECTS
@@ -35,19 +35,19 @@ pink
 Background
 gray
 
-Selector
-yellow
-0...0
-.....
-.....
-.....
-0...0
-
-CursorActive
+CursorActiveStill
 red
 00.00
 0...0
 .....
+0...0
+00.00
+
+CursorActiveMoved
+red
+00.00
+0...0
+....0
 0...0
 00.00
 
@@ -141,6 +141,9 @@ pink
 move34lowertag
 pink
 
+move56alttag
+transparent
+
 =======
 LEGEND
 =======
@@ -150,7 +153,7 @@ LEGEND
 
 Player = Background (necessary for language reasons)
 
-S = Selector
+CursorActive = CursorActiveStill or CursorActiveMoved
 
 High = HighUp or HighDown or HighLeft or HighRight
 Low = LowUp or LowDown or LowLeft or LowRight
@@ -206,9 +209,9 @@ HighRight
 
 
 CursorActive
-Selector
 Tweak
 
+move56alttag
 
 lmb
 rmb
@@ -217,6 +220,7 @@ rmbup
 drag
 Temp
 move34lowertag
+
 
 
 
@@ -237,12 +241,16 @@ RULES
 
 
 [ lmb ] [ CursorActive ] -> [ lmb ] [ ]
-[ lmb Knot ] -> [ CursorActive Knot ]
+[ lmb Knot ] -> [ CursorActiveStill Knot ]
 [ lmb ] -> [ ]
 
 [ drag Wall ] -> [ lmbup Wall ]
 
-[ CursorActive | drag ] -> [ > CursorActive | ]
+[ CursorActive | drag ] -> [ > CursorActiveMoved | ]
+
+[ CursorActiveMoved ] [ move56alttag ] -> [ CursorActiveMoved ] [ ]
+
+[ lmbup CursorActiveStill ] -> [ action CursorActiveStill ]
 
 [ lmbup ] [ Tweak ] -> [ lmbup ] [ ]
 [ lmbup ] [ CursorActive ] -> [ lmbup ] [ ]
@@ -326,7 +334,7 @@ right [ > LowVertical Temp | ] -> [ > LowVertical LowRight | LowLeft ]
 
 (moves 3 + 4) ((((((((((((((((((((((((((((()))))))))))))))))))))))))))))
 
-[ CursorActive | | drag ] -> [ > CursorActive | | ]
+[ CursorActive | | drag ] -> [ > CursorActiveMoved | | ]
 
 [ vertical CursorActive Horizontal_ ] -> [ vertical CursorActive vertical Horizontal_ ] 
 [ horizontal CursorActive Vertical_ ] -> [ horizontal CursorActive horizontal Vertical_ ]
@@ -374,6 +382,7 @@ down [ no Down_ > Knot | | Knot ] -> cancel
 left [ no Left_ > Knot | | Knot ] -> cancel
 right [ no Right_ > Knot | | Knot ] -> cancel
 
+[ > Knot | Wall] -> cancel
 [ > Knot | | Wall ] -> cancel
 
 [ moving Horizontal_ Vertical_ no Overlay ] -> [ moving Horizontal_ Vertical_ Temp ]
@@ -406,12 +415,72 @@ right [ > Vertical_ Temp | | ] -> [ > Vertical_ HighRight | HighLeft HighRight L
 [ > CursorActive | | ] -> [ | | CursorActive ]
 
 
+( moves 5 + 6 ) (can't cancel in here ) (must remove CursorActive)
+
+[ action CursorActive Overlay HighUp ] -> [ action CursorActive Overlay HighUp move56alttag ]
+
+( 5 up )
+
+up [ action CursorActive Overlay | HighDown no Overlay no HighUp ] -> [ action CursorActive Overlay | HighDown Temp ]
+right [ HighDown Temp HighRight | HighLeft HighDown ] -> [ HighDown Temp HighRight | HighLeft HighDown Temp ]
+left [ HighDown Temp HighLeft | HighRight HighDown ] -> [ HighDown Temp HighLeft | HighRight HighDown Temp]
+down [ HighLeft HighDown Temp | HighUp HighLeft ] [ HighRight HighDown Temp ] [ CursorActive ] -> [ | ] [ ] [ HighLeft HighDown no Low no Up_ no Right_ ]
+down [ HighRight HighDown Temp | HighUp HighRight ] [ HighLeft HighDown Temp ] [ CursorActive ] -> [ | ] [ ] [ HighRight HighDown no Low no Up_ no Left_ ]
+
+[ Temp ] -> [ ]
+
+( 5 down )
  
+down [ action CursorActive Overlay | HighUp no Overlay no HighDown ] -> [ action CursorActive Overlay | HighUp Temp ]
+right [ HighUp Temp HighRight | HighLeft HighUp ] -> [ HighUp Temp HighRight | HighLeft HighUp Temp ]
+left [ HighUp Temp HighLeft | HighRight HighUp ] -> [ HighUp Temp HighLeft | HighRight HighUp Temp]
+up [ HighLeft HighUp Temp | HighDown HighLeft ] [ HighRight HighUp Temp ] [ CursorActive ] -> [ | ] [ ] [ HighLeft HighUp no Low no Down_ no Right_ ]
+up [ HighRight HighUp Temp | HighDown HighRight ] [ HighLeft HighUp Temp ] [ CursorActive ] -> [ | ] [ ] [ HighRight HighUp no Low no Down_ no Left_ ]
 
+[ Temp ] -> [ ]
 
+[ action CursorActive Overlay ] -> [ Overlay ]
 
+[ HighUp HighDown action CursorActive ] -> [ HighUp HighDown ]
+[ HighRight HighLeft action CursorActive ] -> [ HighRight HighLeft ]
 
+[ HighUp HighLeft action CursorActive ] -> [ HighUp HighLeft action CursorActive Temp ]
+down [ Temp action CursorActive | no Knot no Wall ] -> [ action Temp action CursorActive | action Temp ]
+right [ action Temp | no Knot no Wall ] -> [ Temp | Temp ]
+down [ Temp action CursorActive | Temp ] [ Temp no CursorActive | Temp ] -> [ Temp CursorActive | Temp ] [ Temp | Temp ]
 
+[ action CursorActive ] [ Temp ] -> [ action CursorActive ] [ ]
+
+[ HighUp HighRight action CursorActive ] -> [ HighUp HighRight action CursorActive Temp ]
+down [ Temp action CursorActive | no Knot no Wall ] -> [ action Temp action CursorActive | action Temp ]
+left [ action Temp | no Knot no Wall ] -> [ Temp | Temp ]
+down [ Temp action CursorActive | Temp ] [ Temp no CursorActive | Temp ] -> [ Temp CursorActive | Temp ] [ Temp | Temp ]
+
+[ action CursorActive ] [ Temp ] -> [ action CursorActive ] [ ]
+
+[ HighDown HighLeft action CursorActive ] -> [ HighDown HighLeft action CursorActive Temp ]
+up [ Temp action CursorActive | no Knot no Wall ] -> [ action Temp action CursorActive | action Temp ]
+right [ action Temp | no Knot no Wall ] -> [ Temp | Temp ]
+up [ Temp action CursorActive | Temp ] [ Temp no CursorActive | Temp ] -> [ Temp CursorActive | Temp ] [ Temp | Temp ]
+
+[ action CursorActive ] [ Temp ] -> [ action CursorActive ] [ ]
+
+[ HighDown HighRight action CursorActive ] -> [ HighDown HighRight action CursorActive Temp ]
+up [ Temp action CursorActive | no Knot no Wall ] -> [ action Temp action CursorActive | action Temp ]
+left [ action Temp | no Knot no Wall ] -> [ Temp | Temp ]
+up [ Temp action CursorActive | Temp ] [ Temp no CursorActive | Temp ] -> [ Temp CursorActive | Temp ] [ Temp | Temp ]
+
+[ action CursorActive ] [ Temp ] -> [ action CursorActive ] [ ]
+
+right [ Temp | Temp ] -> [ Temp HighRight | HighLeft Temp ]
+down [ Temp | Temp ] -> [ Temp HighDown | HighUp Temp ]
+
+[ CursorActive Temp move56alttag ] -> [ LowUp LowDown no HighUp no HighDown ]
+[ CursorActive Temp ] -> [ LowRight LowLeft no HighRight no HighLeft ]
+
+[ Temp ] -> [ ]
+
+[ action CursorActive ] -> [ ]
 
 
 
