@@ -1,0 +1,182 @@
+title Stickoban
+author Zachary Barbanell
+homepage www.puzzlescript.net
+
+run_rules_on_level_start
+
+========
+OBJECTS
+========
+
+Background
+LIGHTGREEN GREEN
+11111
+01111
+11101
+11111
+10111
+
+
+Target
+DarkBlue
+.....
+.000.
+.0.0.
+.000.
+.....
+
+Wall
+BROWN DARKBROWN
+00010
+11111
+01000
+11111
+00010
+
+Player
+Black Orange White Blue
+.000.
+.111.
+22222
+.333.
+.3.3.
+
+Crate
+Orange Yellow
+00000
+0...0
+0...0
+0...0
+00000
+
+redoverlay
+red
+.....
+..0..
+.000.
+..0..
+.....
+
+redcrate
+red
+00000
+0...0
+0...0
+0...0
+00000
+
+whitecrate
+white
+00000
+0...0
+0...0
+0...0
+00000
+
+temp
+pink
+
+temp2
+pink
+
+temp3
+pink
+
+=======
+LEGEND
+=======
+
+. = Background
+# = Wall
+P = Player
+* = Crate
+r = redcrate
+w = whitecrate
+@ = Crate and Target
+O = Target
+movable = redcrate or whitecrate or Crate or Player
+
+
+=======
+SOUNDS
+=======
+
+Crate MOVE 36772507
+
+================
+COLLISIONLAYERS
+================
+
+Background
+Target
+Player, Wall, Crate, redcrate, whitecrate
+redoverlay
+temp
+temp2
+temp3
+
+======
+RULES
+======
+
+[ >  movable | movable ] -> [  >  movable | > movable  ]
+[ >  movable | Wall ] -> cancel
+
+startloop
+random [ perpendicular movable redoverlay | stationary movable redoverlay no temp3 ] -> [ perpendicular movable redoverlay | perpendicular movable redoverlay temp]
+[ > movable temp | ... | no movable ] -> [ > movable temp2 | ... | temp ]
+[ temp Wall ] [ temp2 > movable ] -> [ Wall ] [ temp3 movable ]
+[ temp ] -> [ ]
+[ temp2 ] -> [ ]
+[ >  movable | movable ] -> [  >  movable | > movable  ]
+[ <  movable redoverlay | movable redoverlay ] -> [  <  movable redoverlay | < movable redoverlay  ]
+endloop
+
+[ temp3 ] -> [ ]
+
+
+
+
+
+
+late [ redoverlay ] -> [ ]
+late [ redcrate ] -> [ redcrate redoverlay ]
+late [ movable no whitecrate no player| redoverlay ] -> [ movable redoverlay | redoverlay ]
+
+
+==============
+WINCONDITIONS
+==============
+
+All Target on Crate
+
+=======
+LEVELS
+=======
+
+
+############################
+#o.........................#
+#..........................#
+#..........................#
+#.........#...#...#........#
+#.......*....*.....w.......#
+#...............*..........#
+#.......##.*..w...w........#
+#.....r.##.................#
+#.................*........#
+#............r.....#.......#
+#........p......#..........#
+#..........................#
+#..........................#
+#..........................#
+############################
+
+
+######
+#....#
+#.#P.#
+#.*@.#
+#.O@.#
+#....#
+######
