@@ -593,6 +593,14 @@ darkred
 0...0
 .0.0.
 
+HighlightSquare
+red
+.....
+.000.
+.000.
+.000.
+.....
+
 
 =======
 LEGEND
@@ -782,6 +790,7 @@ HighRightDeco
 
 AboveDeco
 
+HighlightSquare
 CursorActive
 Tweak
 
@@ -1194,7 +1203,57 @@ right [ action loc | action loc ] -> [ action loc HighRight | action loc HighLef
 [ lowertag ] -> [ ]
 
 
+(move highlighting) (((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))
 
+[ CursorActive Vertical_ Horizontal_ no Overlay ] -> [ action CursorActive Vertical_ Horizontal_ ]
+
+up [ action CursorActive HighUp | | ] -> [ action CursorActive HighUp loc11 | loc12 | loc13 ]
+down [ action CursorActive HighDown | | ] -> [ action CursorActive HighDown loc11 | loc12 | loc13 ]
+
+left [ action CursorActive HighLeft ] [ loc | | ] -> [ action CursorActive HighLeft ] [ loc | | Temp ]
+right [ action CursorActive HighRight ] [ loc | | ] -> [ action CursorActive HighRight ] [ loc | | Temp ]
+
+
+[ loc11 | | Temp ] -> [ loc11 | loc21 | loc31 ]
+[ loc12 | | Temp ] -> [ loc12 | loc22 | loc32 ]
+[ loc13 | | Temp ] -> [ loc13 | loc23 | loc33 ]
+
+[ loc Up_ ] -> [ loc up Up_ ]
+[ loc Down_ ] -> [ loc down Down_ ]
+[ loc Left_ ] -> [ loc left Left_ ]
+[ loc Right_ ] -> [ loc right Right_ ]
+
+[ loc11 | loc12 parallel Low ] -> [ lowertag loc11 | loc12 parallel low ]
+[ loc11 | loc21 parallel Low ] -> [ lowertag loc11 | loc21 parallel low ]
+
+[ lowertag loc11 | loc12 perpendicular Low ] -> [ lowertag loc11 | loc12 perpendicular Low Temp ]
+[ lowertag loc11 | loc21 perpendicular Low ] -> [ lowertag loc11 | loc21 perpendicular Low Temp ]
+
+[ loc33 Knot ] -> [ loc33 Knot Temp ] 
+[ loc22 no Knot ] -> [ loc22 Temp ] (disallow simple corner inversions, could be allowed probably)
+
+[ loc13 | loc23 parallel Knot ] -> [ loc13 | loc23 parallel Knot Temp ]
+[ loc31 | loc32 parallel Knot ] -> [ loc31 | loc32 parallel Knot Temp ]
+
+[ Temp ] [ action CursorActive ] -> [ ] [ CursorActive ]
+
+[ loc11 > Knot | < KnotA loc12 > KnotB | < Knot loc13 ] -> [ Temp loc11 > Knot | < KnotA loc12 > KnotB | < Knot loc13 ]
+[ loc11 > Knot | < KnotB loc12 > KnotA | < Knot loc13 ] -> [ Temp loc11 > Knot | < KnotB loc12 > KnotA | < Knot loc13 ]
+[ action CursorActive no Temp ] -> [ CursorActive ]
+[ Temp ] -> [ ]
+
+[ loc11 > Knot | < KnotA loc21 > KnotB | < Knot loc31 ] -> [ Temp loc11 > Knot | < KnotA loc21 > KnotB | < Knot loc31 ]
+[ loc11 > Knot | < KnotB loc21 > KnotA | < Knot loc31 ] -> [ Temp loc11 > Knot | < KnotB loc21 > KnotA | < Knot loc31 ]
+[[ action CursorActive no Temp ] -> [ CursorActive ]
+[ Temp ] -> [ ]
+
+[ action CursorActive ] [ loc33 ] -> [ CursorActive ] [ loc33 Highlightsquare ]
+
+[ loc ] -> [ ]
+
+[ moving Knot ] -> [ Knot ]
+
+[ lowertag ] -> [ ]
 
 
 (((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))
