@@ -720,12 +720,13 @@ late [ LowRight no Overlay ] -> [ HighRight ]
 
 (win conditions)
 late [ CrateTarget no Crate ] [ WinConCrates ] -> [ CrateTarget ] [ WinConCrates Temp ]
-late [ WinConCrates no Temp ] -> [ WinConCrates ] win
-late [ Temp ] -> [ ]
 
 late [ CrossTarget no Overlay ] [ WinConCrosses ] -> [ CrossTarget ] [ WinConCrosses Temp ]
 late [ Overlay no CrossTarget ] [ WinConCrosses ] -> [ Overlay ] [ WinConCrosses Temp ]
-late [ WinConCrosses no Temp ] -> [ WinConCrosses ] win
+
+late [ WinConCrates no Temp ] [ WinCon Temp ] -> [ WinConCrates Temp ] [ WinCon Temp ]
+late [ WinConCrosses no Temp ] [ WinCon Temp ] -> [ WinConCrosses Temp ] [ WinCon Temp ]
+late [ WinCon no Temp ] -> [ WinCon ] win
 late [ Temp ] -> [ ]
 
 (update decorations)
@@ -802,14 +803,15 @@ late [ HighDown LowUp ] -> [ Temp ]
 late [ HighLeft LowRight ] -> [ Temp ]
 late [ HighRight LowLeft ] -> [ Temp ]
 
+late right [ Right_ | no Left_ ] -> [ Right_ | Temp ]
+late left [ Left_ | no Right_ ] -> [ Left_ | Temp ]
+late down [ Down_ | no Up_ ] -> [ Down_ | Temp ]
+late up [ Up_ | no Down_ ] -> [ Up_ | Temp ]
+
 
 ==============
 WINCONDITIONS
 ==============
-
-some WinConCrates
-all CrateTarget on Crate
-
 
 =======
 LEVELS
