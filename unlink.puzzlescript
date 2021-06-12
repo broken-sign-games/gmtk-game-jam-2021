@@ -1188,58 +1188,6 @@ late [ HighDownDeco no HighDown ] -> [ ]
 late [ HighLeftDeco no HighLeft ] -> [ ]
 late [ HighRightDeco no HighRight ] -> [ ]
 
-late [ LowUp_v2_0 LowDown ] -> [ LowUp_v2_0 LowDown LowDown_v2_0 ]
-+ late [ LowUp_v2_1 LowDown ] -> [ LowUp_v2_1 LowDown LowDown_v2_1 ]
-+ late [ LowDown_v2_0 LowUp ] -> [ LowDown_v2_0 LowUp LowUp_v2_0 ]
-+ late [ LowDown_v2_1 LowUp ] -> [ LowDown_v2_1 LowUp LowUp_v2_1 ]
-+ late [ LowLeft_v2_0 LowRight ] -> [ LowLeft_v2_0 LowRight LowRight_v2_0 ]
-+ late [ LowLeft_v2_1 LowRight ] -> [ LowLeft_v2_1 LowRight LowRight_v2_1 ]
-+ late [ LowRight_v2_0 LowLeft ] -> [ LowRight_v2_0 LowLeft LowLeft_v2_0 ]
-+ late [ LowRight_v2_1 LowLeft ] -> [ LowRight_v2_1 LowLeft LowLeft_v2_1 ]
-+ late [ HighUp_v2_0 HighDown ] -> [ HighUp_v2_0 HighDown HighDown_v2_0 ]
-+ late [ HighUp_v2_1 HighDown ] -> [ HighUp_v2_1 HighDown HighDown_v2_1 ]
-+ late [ HighUp_v2_0 HighLeft ] -> [ HighUp_v2_0 HighLeft HighLeft_v2_0 ]
-+ late [ HighUp_v2_1 HighLeft ] -> [ HighUp_v2_1 HighLeft HighLeft_v2_1 ]
-+ late [ HighUp_v2_0 HighRight ] -> [ HighUp_v2_0 HighRight HighRight_v2_0 ]
-+ late [ HighUp_v2_1 HighRight ] -> [ HighUp_v2_1 HighRight HighRight_v2_1 ]
-+ late [ HighDown_v2_0 HighUp ] -> [ HighDown_v2_0 HighUp HighUp_v2_0 ]
-+ late [ HighDown_v2_1 HighUp ] -> [ HighDown_v2_1 HighUp HighUp_v2_1 ]
-+ late [ HighDown_v2_0 HighLeft ] -> [ HighDown_v2_0 HighLeft HighLeft_v2_0 ]
-+ late [ HighDown_v2_1 HighLeft ] -> [ HighDown_v2_1 HighLeft HighLeft_v2_1 ]
-+ late [ HighDown_v2_0 HighRight ] -> [ HighDown_v2_0 HighRight HighRight_v2_0 ]
-+ late [ HighDown_v2_1 HighRight ] -> [ HighDown_v2_1 HighRight HighRight_v2_1 ]
-+ late [ HighLeft_v2_0 HighRight ] -> [ HighLeft_v2_0 HighRight HighRight_v2_0 ]
-+ late [ HighLeft_v2_1 HighRight ] -> [ HighLeft_v2_1 HighRight HighRight_v2_1 ]
-+ late [ HighLeft_v2_0 HighUp ] -> [ HighLeft_v2_0 HighUp HighUp_v2_0 ]
-+ late [ HighLeft_v2_1 HighUp ] -> [ HighLeft_v2_1 HighUp HighUp_v2_1 ]
-+ late [ HighLeft_v2_0 HighDown ] -> [ HighLeft_v2_0 HighDown HighDown_v2_0 ]
-+ late [ HighLeft_v2_1 HighDown ] -> [ HighLeft_v2_1 HighDown HighDown_v2_1 ]
-+ late [ HighRight_v2_0 HighLeft ] -> [ HighRight_v2_0 HighLeft HighLeft_v2_0 ]
-+ late [ HighRight_v2_1 HighLeft ] -> [ HighRight_v2_1 HighLeft HighLeft_v2_1 ]
-+ late [ HighRight_v2_0 HighUp ] -> [ HighRight_v2_0 HighUp HighUp_v2_0 ]
-+ late [ HighRight_v2_1 HighUp ] -> [ HighRight_v2_1 HighUp HighUp_v2_1 ]
-+ late [ HighRight_v2_0 HighDown ] -> [ HighRight_v2_0 HighDown HighDown_v2_0 ]
-+ late [ HighRight_v2_1 HighDown ] -> [ HighRight_v2_1 HighDown HighDown_v2_1 ]
-+ late right [ Right_v2_0 | HighLeft ] -> [ Right_v2_0 | HighLeft HighLeft_v2_1 ]
-+ late right [ Right_v2_1 | HighLeft ] -> [ Right_v2_1 | HighLeft HighLeft_v2_0 ]
-+ late right [ Right_v2_0 | LowLeft ] -> [ Right_v2_0 | LowLeft LowLeft_v2_1 ]
-+ late right [ Right_v2_1 | LowLeft ] -> [ Right_v2_1 | LowLeft LowLeft_v2_0 ]
-+ late left [ Left_v2_0 | HighRight ] -> [ Left_v2_0 | HighRight HighRight_v2_1 ]
-+ late left [ Left_v2_1 | HighRight ] -> [ Left_v2_1 | HighRight HighRight_v2_0 ]
-+ late left [ Left_v2_0 | LowRight ] -> [ Left_v2_0 | LowRight LowRight_v2_1 ]
-+ late left [ Left_v2_1 | LowRight ] -> [ Left_v2_1 | LowRight LowRight_v2_0 ]
-+ late down [ Down_v2_0 | HighUp ] -> [ Down_v2_0 | HighUp HighUp_v2_1 ]
-+ late down [ Down_v2_1 | HighUp ] -> [ Down_v2_1 | HighUp HighUp_v2_0 ]
-+ late down [ Down_v2_0 | LowUp ] -> [ Down_v2_0 | LowUp LowUp_v2_1 ]
-+ late down [ Down_v2_1 | LowUp ] -> [ Down_v2_1 | LowUp LowUp_v2_0 ]
-+ late up [ Up_v2_0 | HighDown ] -> [ Up_v2_0 | HighDown HighDown_v2_1 ]
-+ late up [ Up_v2_1 | HighDown ] -> [ Up_v2_1 | HighDown HighDown_v2_0 ]
-+ late up [ Up_v2_0 | LowDown ] -> [ Up_v2_0 | LowDown LowDown_v2_1 ]
-+ late up [ Up_v2_1 | LowDown ] -> [ Up_v2_1 | LowDown LowDown_v2_0 ]
-
-(v1 is fallback)
-late random [ HighUp no Decoration ] -> [ HighUp HighUp_v1_0 ]
-
 late [ LowUp_v1_0 LowDown ] -> [ LowUp_v1_0 LowDown LowDown_v1_0 ]
 + late [ LowUp_v1_1 LowDown ] -> [ LowUp_v1_1 LowDown LowDown_v1_1 ]
 + late [ LowDown_v1_0 LowUp ] -> [ LowDown_v1_0 LowUp LowUp_v1_0 ]
@@ -1289,6 +1237,55 @@ late [ LowUp_v1_0 LowDown ] -> [ LowUp_v1_0 LowDown LowDown_v1_0 ]
 + late up [ Up_v1_0 | LowDown ] -> [ Up_v1_0 | LowDown LowDown_v1_1 ]
 + late up [ Up_v1_1 | LowDown ] -> [ Up_v1_1 | LowDown LowDown_v1_0 ]
 
+late [ LowUp_v2_0 LowDown ] -> [ LowUp_v2_0 LowDown LowDown_v2_0 ]
++ late [ LowUp_v2_1 LowDown ] -> [ LowUp_v2_1 LowDown LowDown_v2_1 ]
++ late [ LowDown_v2_0 LowUp ] -> [ LowDown_v2_0 LowUp LowUp_v2_0 ]
++ late [ LowDown_v2_1 LowUp ] -> [ LowDown_v2_1 LowUp LowUp_v2_1 ]
++ late [ LowLeft_v2_0 LowRight ] -> [ LowLeft_v2_0 LowRight LowRight_v2_0 ]
++ late [ LowLeft_v2_1 LowRight ] -> [ LowLeft_v2_1 LowRight LowRight_v2_1 ]
++ late [ LowRight_v2_0 LowLeft ] -> [ LowRight_v2_0 LowLeft LowLeft_v2_0 ]
++ late [ LowRight_v2_1 LowLeft ] -> [ LowRight_v2_1 LowLeft LowLeft_v2_1 ]
++ late [ HighUp_v2_0 HighDown ] -> [ HighUp_v2_0 HighDown HighDown_v2_0 ]
++ late [ HighUp_v2_1 HighDown ] -> [ HighUp_v2_1 HighDown HighDown_v2_1 ]
++ late [ HighUp_v2_0 HighLeft ] -> [ HighUp_v2_0 HighLeft HighLeft_v2_0 ]
++ late [ HighUp_v2_1 HighLeft ] -> [ HighUp_v2_1 HighLeft HighLeft_v2_1 ]
++ late [ HighUp_v2_0 HighRight ] -> [ HighUp_v2_0 HighRight HighRight_v2_0 ]
++ late [ HighUp_v2_1 HighRight ] -> [ HighUp_v2_1 HighRight HighRight_v2_1 ]
++ late [ HighDown_v2_0 HighUp ] -> [ HighDown_v2_0 HighUp HighUp_v2_0 ]
++ late [ HighDown_v2_1 HighUp ] -> [ HighDown_v2_1 HighUp HighUp_v2_1 ]
++ late [ HighDown_v2_0 HighLeft ] -> [ HighDown_v2_0 HighLeft HighLeft_v2_0 ]
++ late [ HighDown_v2_1 HighLeft ] -> [ HighDown_v2_1 HighLeft HighLeft_v2_1 ]
++ late [ HighDown_v2_0 HighRight ] -> [ HighDown_v2_0 HighRight HighRight_v2_0 ]
++ late [ HighDown_v2_1 HighRight ] -> [ HighDown_v2_1 HighRight HighRight_v2_1 ]
++ late [ HighLeft_v2_0 HighRight ] -> [ HighLeft_v2_0 HighRight HighRight_v2_0 ]
++ late [ HighLeft_v2_1 HighRight ] -> [ HighLeft_v2_1 HighRight HighRight_v2_1 ]
++ late [ HighLeft_v2_0 HighUp ] -> [ HighLeft_v2_0 HighUp HighUp_v2_0 ]
++ late [ HighLeft_v2_1 HighUp ] -> [ HighLeft_v2_1 HighUp HighUp_v2_1 ]
++ late [ HighLeft_v2_0 HighDown ] -> [ HighLeft_v2_0 HighDown HighDown_v2_0 ]
++ late [ HighLeft_v2_1 HighDown ] -> [ HighLeft_v2_1 HighDown HighDown_v2_1 ]
++ late [ HighRight_v2_0 HighLeft ] -> [ HighRight_v2_0 HighLeft HighLeft_v2_0 ]
++ late [ HighRight_v2_1 HighLeft ] -> [ HighRight_v2_1 HighLeft HighLeft_v2_1 ]
++ late [ HighRight_v2_0 HighUp ] -> [ HighRight_v2_0 HighUp HighUp_v2_0 ]
++ late [ HighRight_v2_1 HighUp ] -> [ HighRight_v2_1 HighUp HighUp_v2_1 ]
++ late [ HighRight_v2_0 HighDown ] -> [ HighRight_v2_0 HighDown HighDown_v2_0 ]
++ late [ HighRight_v2_1 HighDown ] -> [ HighRight_v2_1 HighDown HighDown_v2_1 ]
++ late right [ Right_v2_0 | HighLeft ] -> [ Right_v2_0 | HighLeft HighLeft_v2_1 ]
++ late right [ Right_v2_1 | HighLeft ] -> [ Right_v2_1 | HighLeft HighLeft_v2_0 ]
++ late right [ Right_v2_0 | LowLeft ] -> [ Right_v2_0 | LowLeft LowLeft_v2_1 ]
++ late right [ Right_v2_1 | LowLeft ] -> [ Right_v2_1 | LowLeft LowLeft_v2_0 ]
++ late left [ Left_v2_0 | HighRight ] -> [ Left_v2_0 | HighRight HighRight_v2_1 ]
++ late left [ Left_v2_1 | HighRight ] -> [ Left_v2_1 | HighRight HighRight_v2_0 ]
++ late left [ Left_v2_0 | LowRight ] -> [ Left_v2_0 | LowRight LowRight_v2_1 ]
++ late left [ Left_v2_1 | LowRight ] -> [ Left_v2_1 | LowRight LowRight_v2_0 ]
++ late down [ Down_v2_0 | HighUp ] -> [ Down_v2_0 | HighUp HighUp_v2_1 ]
++ late down [ Down_v2_1 | HighUp ] -> [ Down_v2_1 | HighUp HighUp_v2_0 ]
++ late down [ Down_v2_0 | LowUp ] -> [ Down_v2_0 | LowUp LowUp_v2_1 ]
++ late down [ Down_v2_1 | LowUp ] -> [ Down_v2_1 | LowUp LowUp_v2_0 ]
++ late up [ Up_v2_0 | HighDown ] -> [ Up_v2_0 | HighDown HighDown_v2_1 ]
++ late up [ Up_v2_1 | HighDown ] -> [ Up_v2_1 | HighDown HighDown_v2_0 ]
++ late up [ Up_v2_0 | LowDown ] -> [ Up_v2_0 | LowDown LowDown_v2_1 ]
++ late up [ Up_v2_1 | LowDown ] -> [ Up_v2_1 | LowDown LowDown_v2_0 ]
+
 
 (debug - should never happen, but might be hard to notice if they do)
 (if these are messages weird stuff happens, don't make them messages )
@@ -1324,7 +1321,7 @@ LEVELS
 #############
 ##..U......##
 ##....o....##
-##..┌───┐..##
+##..╒───┐..##
 ##..│╫═╫│..##
 ##..│║*║│..##
 ##..│╫═╫│..##
@@ -1337,7 +1334,7 @@ LEVELS
 #################
 #################
 ##.............##
-##........┌─┐..##
+##........╒─┐..##
 ##........│┌╂┐.##
 ##.......┌┿╂┘│.##
 ##.......│└┿─┘.##
@@ -1370,7 +1367,7 @@ message Click and drag on the rope to deform it. Ropes are blocked by crates and
 
 ###########
 ###########
-##..┌─┐..##
+##..╒─┐..##
 ##..│o│..##
 ##┌─╂─┘*.##
 ##│o│....##
@@ -1402,7 +1399,7 @@ message Click a corner of the rope to wind it into a tight loop. Click the cross
 
 ###########
 ###########
-##┌┐..#####
+##╒┐..#####
 ##└┘..#####
 ##....#####
 ##.......##
@@ -1418,7 +1415,7 @@ message Right click the rope to nail it down before dragging in order to create 
 ###########
 ####...####
 ####.*.####
-##.┌───┐.##
+##.╒───┐.##
 ##.│ooo│.##
 ##.└───┘.##
 ##.*.#.*.##
@@ -1430,7 +1427,7 @@ message Barrels are like crates, but better!
 
 ###########
 ###########
-##..┌─┐..##
+##..╒─┐..##
 ##..│U│..##
 ##┌─╂─┘*.##
 ##│o│....##
@@ -1458,7 +1455,7 @@ message Barrels are like crates, but better!
 #################
 ##.............##
 ##.............##
-##....┌──┐.....##
+##....╒──┐.....##
 ##....│┌─╂┐....##
 ##....││O││....##
 ##....│└┐││....##
@@ -1474,7 +1471,7 @@ message Barrels are like crates, but better!
 
 #############
 #############
-######┌───┐##
+######╒───┐##
 ##...#│.O.│##
 ##...#└┐.┌┘##
 ##┌─┐##│.│###
@@ -1491,7 +1488,7 @@ message Barrels are like crates, but better!
 
 #################
 #################
-##┌───┐###┌───┐##
+##╒───┐###┌───┐##
 ##│...│###│...│##
 ##│...└─┐.│...│##
 ##│o._┌─╂─┘*.u│##
@@ -1511,7 +1508,7 @@ message Barrels are like crates, but better!
 ##.............##
 ##.............##
 ##.............##
-##.....┌┐......##
+##.....╒┐......##
 ##....┌╂┿┐.....##
 ##....│└╂┘.....##
 ##....└─┘......##
@@ -1525,7 +1522,7 @@ message Barrels are like crates, but better!
 #################
 ##.............##
 ##.............##
-##...┌──┐......##
+##...╒──┐......##
 ##...│.╓╂─┐....##
 ##...│╒╂┿┐│....##
 ##...└╂┿┘││....##
