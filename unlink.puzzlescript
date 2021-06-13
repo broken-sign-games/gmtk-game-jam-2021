@@ -543,6 +543,135 @@ LowRight_v2_1
 .....
 .....
 
+HighUp_v3_0
+#7F2A2C #994344
+..0..
+..1..
+..0..
+.....
+.....
+
+HighUp_v3_1
+#994344 #7F2A2C
+..0..
+..1..
+..0..
+.....
+.....
+
+LowUp_v3_0
+#7F2A2C #994344
+..0..
+.....
+.....
+.....
+.....
+
+LowUp_v3_1
+#994344 #7F2A2C
+..0..
+.....
+.....
+.....
+.....
+
+HighDown_v3_0
+#7F2A2C #994344
+.....
+.....
+..0..
+..1..
+..0..
+
+HighDown_v3_1
+#994344 #7F2A2C
+.....
+.....
+..0..
+..1..
+..0..
+
+
+LowDown_v3_0
+#7F2A2C #994344
+.....
+.....
+.....
+.....
+..0..
+
+LowDown_v3_1
+#994344 #7F2A2C
+.....
+.....
+.....
+.....
+..0..
+
+HighLeft_v3_0
+#7F2A2C #994344
+.....
+.....
+010..
+.....
+.....
+
+HighLeft_v3_1
+#994344 #7F2A2C
+.....
+.....
+010..
+.....
+.....
+
+LowLeft_v3_0
+#7F2A2C #994344
+.....
+.....
+0....
+.....
+.....
+
+LowLeft_v3_1
+#994344 #7F2A2C
+.....
+.....
+0....
+.....
+.....
+
+HighRight_v3_0
+#7F2A2C #994344
+.....
+.....
+..010
+.....
+.....
+
+HighRight_v3_1
+#994344 #7F2A2C
+.....
+.....
+..010
+.....
+.....
+
+LowRight_v3_0
+#7F2A2C #994344
+.....
+.....
+....0
+.....
+.....
+
+LowRight_v3_1
+#994344 #7F2A2C
+.....
+.....
+....0
+.....
+.....
+
 Overlay (for putting on tiles with both high and low wires) (used to be visual, is now purely for logic)
 transparent
 
@@ -772,17 +901,38 @@ Down_v2_1 = LowDown_v2_1 or HighDown_v2_1
 Low_v2 = LowUp_v2 or LowDown_v2 or LowLeft_v2 or LowRight_v2
 High_v2 = HighUp_v2 or HighDown_v2 or HighLeft_v2 or HighRight_v2
 
-HighLeftDeco = HighLeft_v1 or HighLeft_v2
-HighRightDeco = HighRight_v1 or HighRight_v2
-HighUpDeco = HighUp_v1 or HighUp_v2
-HighDownDeco = HighDown_v1 or HighDown_v2
-LowLeftDeco = LowLeft_v1 or LowLeft_v2
-LowRightDeco = LowRight_v1 or LowRight_v2
-LowUpDeco = LowUp_v1 or LowUp_v2
-LowDownDeco = LowDown_v1 or LowDown_v2
+HighLeft_v3 = HighLeft_v3_0 or HighLeft_v3_1
+HighRight_v3 = HighRight_v3_0 or HighRight_v3_1
+HighUp_v3 = HighUp_v3_0 or HighUp_v3_1
+HighDown_v3 = HighDown_v3_0 or HighDown_v3_1
+LowLeft_v3 = LowLeft_v3_0 or LowLeft_v3_1
+LowRight_v3 = LowRight_v3_0 or LowRight_v3_1
+LowUp_v3 = LowUp_v3_0 or LowUp_v3_1
+LowDown_v3 = LowDown_v3_0 or LowDown_v3_1
 
-LowDeco = Low_v1 or Low_v2
-HighDeco = High_v1 or High_v2
+Left_v3_0 = LowLeft_v3_0 or HighLeft_v3_0
+Left_v3_1 = LowLeft_v3_1 or HighLeft_v3_1
+Right_v3_0 = LowRight_v3_0 or HighRight_v3_0
+Right_v3_1 = LowRight_v3_1 or HighRight_v3_1
+Up_v3_0 = LowUp_v3_0 or HighUp_v3_0
+Up_v3_1 = LowUp_v3_1 or HighUp_v3_1
+Down_v3_0 = LowDown_v3_0 or HighDown_v3_0
+Down_v3_1 = LowDown_v3_1 or HighDown_v3_1
+
+Low_v3 = LowUp_v3 or LowDown_v3 or LowLeft_v3 or LowRight_v3
+High_v3 = HighUp_v3 or HighDown_v3 or HighLeft_v3 or HighRight_v3
+
+HighLeftDeco = HighLeft_v1 or HighLeft_v2 or HighLeft_v3
+HighRightDeco = HighRight_v1 or HighRight_v2 or HighRight_v3
+HighUpDeco = HighUp_v1 or HighUp_v2 or HighUp_v3
+HighDownDeco = HighDown_v1 or HighDown_v2 or HighDown_v3
+LowLeftDeco = LowLeft_v1 or LowLeft_v2 or LowLeft_v3
+LowRightDeco = LowRight_v1 or LowRight_v2 or LowRight_v3
+LowUpDeco = LowUp_v1 or LowUp_v2 or LowUp_v3
+LowDownDeco = LowDown_v1 or LowDown_v2 or LowDown_v3
+
+LowDeco = Low_v1 or Low_v2 or Low_v3
+HighDeco = High_v1 or High_v2 or High_v3
 Decoration = LowDeco or HighDeco
 
 WallDeco = Wall_v1 or Wall_v2 or Wall_v3
@@ -800,7 +950,7 @@ WallDeco = Wall_v1 or Wall_v2 or Wall_v3
 
 ╒ = HighDown and HighRight and HighDown_v1_0 and HighRight_v1_0
 ╓ = HighDown and HighRight and HighDown_v2_0 and HighRight_v2_0
-
+╭ = HighDown and HighRight and HighDown_v3_0 and HighRight_v3_0
 
 ╫ = TargetCrossVertical
 ╪ = TargetCrossHorizontal
@@ -1495,6 +1645,54 @@ late [ LowUp_v2_0 LowDown ] -> [ LowUp_v2_0 LowDown LowDown_v2_0 ]
 + late up [ Up_v2_0 | LowDown ] -> [ Up_v2_0 | LowDown LowDown_v2_1 ]
 + late up [ Up_v2_1 | LowDown ] -> [ Up_v2_1 | LowDown LowDown_v2_0 ]
 
+late [ LowUp_v3_0 LowDown ] -> [ LowUp_v3_0 LowDown LowDown_v3_0 ]
++ late [ LowUp_v3_1 LowDown ] -> [ LowUp_v3_1 LowDown LowDown_v3_1 ]
++ late [ LowDown_v3_0 LowUp ] -> [ LowDown_v3_0 LowUp LowUp_v3_0 ]
++ late [ LowDown_v3_1 LowUp ] -> [ LowDown_v3_1 LowUp LowUp_v3_1 ]
++ late [ LowLeft_v3_0 LowRight ] -> [ LowLeft_v3_0 LowRight LowRight_v3_0 ]
++ late [ LowLeft_v3_1 LowRight ] -> [ LowLeft_v3_1 LowRight LowRight_v3_1 ]
++ late [ LowRight_v3_0 LowLeft ] -> [ LowRight_v3_0 LowLeft LowLeft_v3_0 ]
++ late [ LowRight_v3_1 LowLeft ] -> [ LowRight_v3_1 LowLeft LowLeft_v3_1 ]
++ late [ HighUp_v3_0 HighDown ] -> [ HighUp_v3_0 HighDown HighDown_v3_0 ]
++ late [ HighUp_v3_1 HighDown ] -> [ HighUp_v3_1 HighDown HighDown_v3_1 ]
++ late [ HighUp_v3_0 HighLeft ] -> [ HighUp_v3_0 HighLeft HighLeft_v3_0 ]
++ late [ HighUp_v3_1 HighLeft ] -> [ HighUp_v3_1 HighLeft HighLeft_v3_1 ]
++ late [ HighUp_v3_0 HighRight ] -> [ HighUp_v3_0 HighRight HighRight_v3_0 ]
++ late [ HighUp_v3_1 HighRight ] -> [ HighUp_v3_1 HighRight HighRight_v3_1 ]
++ late [ HighDown_v3_0 HighUp ] -> [ HighDown_v3_0 HighUp HighUp_v3_0 ]
++ late [ HighDown_v3_1 HighUp ] -> [ HighDown_v3_1 HighUp HighUp_v3_1 ]
++ late [ HighDown_v3_0 HighLeft ] -> [ HighDown_v3_0 HighLeft HighLeft_v3_0 ]
++ late [ HighDown_v3_1 HighLeft ] -> [ HighDown_v3_1 HighLeft HighLeft_v3_1 ]
++ late [ HighDown_v3_0 HighRight ] -> [ HighDown_v3_0 HighRight HighRight_v3_0 ]
++ late [ HighDown_v3_1 HighRight ] -> [ HighDown_v3_1 HighRight HighRight_v3_1 ]
++ late [ HighLeft_v3_0 HighRight ] -> [ HighLeft_v3_0 HighRight HighRight_v3_0 ]
++ late [ HighLeft_v3_1 HighRight ] -> [ HighLeft_v3_1 HighRight HighRight_v3_1 ]
++ late [ HighLeft_v3_0 HighUp ] -> [ HighLeft_v3_0 HighUp HighUp_v3_0 ]
++ late [ HighLeft_v3_1 HighUp ] -> [ HighLeft_v3_1 HighUp HighUp_v3_1 ]
++ late [ HighLeft_v3_0 HighDown ] -> [ HighLeft_v3_0 HighDown HighDown_v3_0 ]
++ late [ HighLeft_v3_1 HighDown ] -> [ HighLeft_v3_1 HighDown HighDown_v3_1 ]
++ late [ HighRight_v3_0 HighLeft ] -> [ HighRight_v3_0 HighLeft HighLeft_v3_0 ]
++ late [ HighRight_v3_1 HighLeft ] -> [ HighRight_v3_1 HighLeft HighLeft_v3_1 ]
++ late [ HighRight_v3_0 HighUp ] -> [ HighRight_v3_0 HighUp HighUp_v3_0 ]
++ late [ HighRight_v3_1 HighUp ] -> [ HighRight_v3_1 HighUp HighUp_v3_1 ]
++ late [ HighRight_v3_0 HighDown ] -> [ HighRight_v3_0 HighDown HighDown_v3_0 ]
++ late [ HighRight_v3_1 HighDown ] -> [ HighRight_v3_1 HighDown HighDown_v3_1 ]
++ late right [ Right_v3_0 | HighLeft ] -> [ Right_v3_0 | HighLeft HighLeft_v3_1 ]
++ late right [ Right_v3_1 | HighLeft ] -> [ Right_v3_1 | HighLeft HighLeft_v3_0 ]
++ late right [ Right_v3_0 | LowLeft ] -> [ Right_v3_0 | LowLeft LowLeft_v3_1 ]
++ late right [ Right_v3_1 | LowLeft ] -> [ Right_v3_1 | LowLeft LowLeft_v3_0 ]
++ late left [ Left_v3_0 | HighRight ] -> [ Left_v3_0 | HighRight HighRight_v3_1 ]
++ late left [ Left_v3_1 | HighRight ] -> [ Left_v3_1 | HighRight HighRight_v3_0 ]
++ late left [ Left_v3_0 | LowRight ] -> [ Left_v3_0 | LowRight LowRight_v3_1 ]
++ late left [ Left_v3_1 | LowRight ] -> [ Left_v3_1 | LowRight LowRight_v3_0 ]
++ late down [ Down_v3_0 | HighUp ] -> [ Down_v3_0 | HighUp HighUp_v3_1 ]
++ late down [ Down_v3_1 | HighUp ] -> [ Down_v3_1 | HighUp HighUp_v3_0 ]
++ late down [ Down_v3_0 | LowUp ] -> [ Down_v3_0 | LowUp LowUp_v3_1 ]
++ late down [ Down_v3_1 | LowUp ] -> [ Down_v3_1 | LowUp LowUp_v3_0 ]
++ late up [ Up_v3_0 | HighDown ] -> [ Up_v3_0 | HighDown HighDown_v3_1 ]
++ late up [ Up_v3_1 | HighDown ] -> [ Up_v3_1 | HighDown HighDown_v3_0 ]
++ late up [ Up_v3_0 | LowDown ] -> [ Up_v3_0 | LowDown LowDown_v3_1 ]
++ late up [ Up_v3_1 | LowDown ] -> [ Up_v3_1 | LowDown LowDown_v3_0 ]
 
 (debug - should never happen, but might be hard to notice if they do)
 (if these are messages weird stuff happens, don't make them messages )
