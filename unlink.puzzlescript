@@ -594,7 +594,7 @@ pink
 
 
 TargetCrossVertical
-lightgreen
+#E5DAC7
 .0.0.
 00.00
 .0.0.
@@ -602,7 +602,7 @@ lightgreen
 .0.0.
 
 TargetCrossHorizontal
-lightgreen
+#E5DAC7
 .0.0.
 00000
 .....
@@ -610,7 +610,7 @@ lightgreen
 .0.0.
 
 TargetUpDown
-lightgreen
+#E5DAC7
 .0.0.
 .0.0.
 .0.0.
@@ -618,7 +618,7 @@ lightgreen
 .0.0.
 
 TargetLeftRight
-lightgreen
+#E5DAC7
 .....
 00000
 .....
@@ -626,7 +626,7 @@ lightgreen
 .....
 
 TargetUpLeft
-lightgreen
+#E5DAC7
 .0.0.
 00.0.
 ...0.
@@ -634,7 +634,7 @@ lightgreen
 .....
 
 TargetUpRight
-lightgreen
+#E5DAC7
 .0.0.
 .0.00
 .0...
@@ -642,7 +642,7 @@ lightgreen
 .....
 
 TargetDownLeft
-lightgreen
+#E5DAC7
 .....
 0000.
 ...0.
@@ -650,7 +650,7 @@ lightgreen
 .0.0.
 
 TargetDownRight
-lightgreen
+#E5DAC7
 .....
 .0000
 .0...
@@ -658,20 +658,15 @@ lightgreen
 .0.0.
 
 MovableAnchor
-yellow
-.0.0.
-0...0
+#898989
 .....
-0...0
+.000.
 .0.0.
+.000.
+.....
 
 StaticAnchor
-darkred
-.0.0.
-0...0
-.....
-0...0
-.0.0.
+#898989
 
 HighlightSquare
 #EA7420
