@@ -417,7 +417,7 @@ LowRight_v1_1
 
 
 HighUp_v2_0
-red lightred
+#473625 #5d4730
 ..0..
 ..1..
 ..0..
@@ -425,7 +425,7 @@ red lightred
 .....
 
 HighUp_v2_1
-lightred red
+#5d4730 #473625
 ..0..
 ..1..
 ..0..
@@ -433,7 +433,7 @@ lightred red
 .....
 
 LowUp_v2_0
-red lightred
+#473625 #5d4730
 ..0..
 .....
 .....
@@ -441,7 +441,7 @@ red lightred
 .....
 
 LowUp_v2_1
-lightred red
+#5d4730 #473625
 ..0..
 .....
 .....
@@ -449,7 +449,7 @@ lightred red
 .....
 
 HighDown_v2_0
-red lightred
+#473625 #5d4730
 .....
 .....
 ..0..
@@ -457,7 +457,7 @@ red lightred
 ..0..
 
 HighDown_v2_1
-lightred red
+#5d4730 #473625
 .....
 .....
 ..0..
@@ -466,7 +466,7 @@ lightred red
 
 
 LowDown_v2_0
-red lightred
+#473625 #5d4730
 .....
 .....
 .....
@@ -474,7 +474,7 @@ red lightred
 ..0..
 
 LowDown_v2_1
-lightred red
+#5d4730 #473625
 .....
 .....
 .....
@@ -482,7 +482,7 @@ lightred red
 ..0..
 
 HighLeft_v2_0
-red lightred
+#473625 #5d4730
 .....
 .....
 010..
@@ -490,7 +490,7 @@ red lightred
 .....
 
 HighLeft_v2_1
-lightred red
+#5d4730 #473625
 .....
 .....
 010..
@@ -498,7 +498,7 @@ lightred red
 .....
 
 LowLeft_v2_0
-red lightred
+#473625 #5d4730
 .....
 .....
 0....
@@ -506,7 +506,7 @@ red lightred
 .....
 
 LowLeft_v2_1
-lightred red
+#5d4730 #473625
 .....
 .....
 0....
@@ -514,7 +514,7 @@ lightred red
 .....
 
 HighRight_v2_0
-red lightred
+#473625 #5d4730
 .....
 .....
 ..010
@@ -522,7 +522,7 @@ red lightred
 .....
 
 HighRight_v2_1
-lightred red
+#5d4730 #473625
 .....
 .....
 ..010
@@ -530,7 +530,7 @@ lightred red
 .....
 
 LowRight_v2_0
-red lightred
+#473625 #5d4730
 .....
 .....
 ....0
@@ -538,7 +538,7 @@ red lightred
 .....
 
 LowRight_v2_1
-lightred red
+#5d4730 #473625
 .....
 .....
 ....0
