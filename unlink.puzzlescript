@@ -1,6 +1,8 @@
-title Unlink Mouse Ver
+title Knotical Nonsense
 author MZCJ
 homepage www.puzzlescript.net
+
+youtube N3m2GBcDOIQ
 
 verbose_logging
 
@@ -99,6 +101,38 @@ red
 .....
 0...0
 00.00
+
+CursorCrateAbove
+red
+.....
+.....
+.....
+0...0
+.....
+
+CursorCrate
+red
+.....
+.....
+0...0
+.....
+0...0
+
+CursorBarrelAbove
+red
+.....
+.....
+.....
+.0.0.
+0...0
+
+CursorBarrel
+red
+.....
+.....
+.....
+0...0
+.0.0.
 
 Tweak
 black lightgray
@@ -682,7 +716,7 @@ Obstacle = Wall or Cratelike or Anchor
 
 
 
-CursorActive = CursorActiveStill or CursorActiveMoved
+CursorActive = CursorActiveStill or CursorActiveMoved or CursorCrate or CursorBarrel
 
 High = HighUp or HighDown or HighLeft or HighRight
 Low = LowUp or LowDown or LowLeft or LowRight
@@ -791,9 +825,10 @@ KnotA = Up_ or Left_
 KnotB = Down_ or Right_
 
 AboveDeco = abovedecocrate or abovedecobarrel
+AboveCursor = CursorCrateAbove or CursorBarrelAbove
 (BelowDeco = )
 
-Isometric = AboveDeco (or BelowDeco)
+Isometric = AboveDeco or AboveCursor (or BelowDeco)
 
 Plank = Plank1 or Plank2 or Plank3 or Plank4 or Plank5 or Plank6
 
@@ -854,12 +889,12 @@ HighDownDeco
 HighLeftDeco
 HighRightDeco
 
-
-AboveDeco
-
 HighlightSquare
 CursorActive
 Tweak
+
+AboveDeco
+AboveCursor
 
 move56alttag
 
@@ -1354,6 +1389,8 @@ late [ Isometric ] -> [ ]
 late up [ Crate | ] -> [ Crate | abovedecocrate ]
 late up [ Barrel | ] -> [ Barrel | abovedecobarrel ]
 
+late up [ CursorActive Crate | ] -> [ CursorCrate Crate | CursorCrateAbove ]
+late up [ CursorActive Barrel | ] -> [ CursorBarrel Barrel | CursorBarrelAbove ]
 
 (update decorations)
 late [ Wall no WallDeco ] -> [ Wall random WallDeco ]
@@ -1494,13 +1531,7 @@ WINCONDITIONS
 LEVELS
 =======
 
-
-
-
-
-
-
-message Click and drag crates onto the targets.
+message All hands on deck! Click and drag crates onto the targets.
 
 ###########
 ###########
@@ -1736,9 +1767,7 @@ message Barrels are like crates, but with fewer corners!
 #####################
 #####################
 
-(##.##
-#...#
-##.##
+(
 
 #################
 ##.............##
@@ -1784,4 +1813,20 @@ message Barrels are like crates, but with fewer corners!
 ##.........##
 ##.........##
 #############
-#############)
+#############
+
+
+#############
+#############
+##.........##
+##....o....##
+##..╒─┐....##
+##..1.│.1..##
+##....└─┘..##
+##...+.....##
+##.........##
+##.........##
+#############
+#############
+
+)
