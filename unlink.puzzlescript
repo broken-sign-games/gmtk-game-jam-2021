@@ -1610,23 +1610,21 @@ message Right click the rope to nail it down before dragging in order to create 
 ###########
 
 message You can drag a shorter rope segment over a longer parallel piece of rope.
-(Feels a little inelegant, but I like the idea of priming the player for the 3-4 move
- with the correct initial shape and then requiring them to pull off another themselves
- using nails.
- Also, this permits some flip moves, which may be confusing.)
+(Introduction to 3-4 moves
+ Not a big fan of the lack of crates again, and also allows for some solutions that
+ avoid 3-4 moves by using 5-6 moves instead. :/)
 
-#############
-#############
-##╒──┐.┌──┐##
-##│o.└─┘.o│##
-##└───────┘##
-##...+.+...##
-##..+...+..##
-##..+...+..##
-##.*.###.*.##
-##...###...##
-#############
-#############
+###########
+###########
+####┌─┐####
+####│.│####
+##╒─╂─╂─┐##
+##└─┘.└─┘##
+##..+.+..##
+####...####
+####...####
+###########
+###########
 
 message Try dragging a corner of one rope diagonally across another!
 (Introduction to flip moves)
