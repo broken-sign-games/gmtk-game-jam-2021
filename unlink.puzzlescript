@@ -1866,12 +1866,23 @@ a = x0y0
 SOUNDS
 =======
 
+sfx0 31075507
+sfx2 6008507
+sfx3 40663107
+sfx4 94359908
+
+sfx5 37279309
+sfx6 51132700
+
+undo 6008507
 (sfx:
 0 = crate/barrel move
 1 = standard rope movement
 2 = moving a rope over/under
 3 = twisting/untwisting a corner
 4 = flip moves
+5 = win
+6 = nails
 )
 
 
@@ -1979,8 +1990,8 @@ down [ Plank1 | ] -> [ Plank1 | Plank1Below ]
 
 [ HighlightSquare ] -> [ ]
 
-[ rmb Tweak ] -> [ ]
-[ rmb Knot ] -> [ Tweak Knot ]
+[ rmb Tweak ] -> [ ] sfx6
+[ rmb Knot ] -> [ Tweak Knot ] sfx6
 
 [ rmb ] -> [ ]
 
@@ -2425,7 +2436,7 @@ late [ Overlay no CrossTarget ] [ WinConCrosses ] -> [ Overlay ] [ ]
 
 late [ Target no WinCon ] [ WinCon ] -> [ Target ] [ ]
 
-late [ WinCon ] -> [ ] win
+late [ WinCon ] -> [ ] win sfx5
 
 
 
@@ -2712,21 +2723,21 @@ message Right click the rope to nail it down before dragging in order to create 
 ###########
 
 message You can drag a shorter rope segment over a longer parallel piece of rope.
-(Introduction to 3-4 moves
- Not a big fan of the lack of crates again, and also allows for some solutions that
- avoid 3-4 moves by using 5-6 moves instead. :/)
+(Introduction to 3-4 moves)
 
-###########
-###########
-####┌─┐####
-####│.│####
-##╒─╂─╂─┐##
-##└─┘.└─┘##
-##..╫.╫..##
-####...####
-####...####
-###########
-###########
+#############
+#############
+##.........##
+##.╒─┐..═..##
+##.│.│.║*║.##
+##.│o│..═..##
+##.│.│.....##
+##.│o│..═..##
+##.│.│.║*║.##
+##.└─┘..═..##
+##.........##
+#############
+#############
 
 message Try dragging a corner of one rope diagonally across another!
 (Introduction to flip moves)
@@ -2770,6 +2781,18 @@ message There are many varieties of these diagonal moves. Keep experimenting wit
 ##└─┘└─┘.##
 ###########
 ###########
+
+################
+################
+##............##
+##..╔═╗..╒─┐..##
+##.╔╫═╪╗.│o│..##
+##.╚╪═╫╝╓╂─┿┐.##
+##..║*║.└┿─╂┘.##
+##..╚═╝..└─┘..##
+##............##
+################
+################
 
 #############
 #############
@@ -2818,6 +2841,21 @@ message Make sure the right rope is on top when matching rope targets! When crea
 ##.............##
 #################
 #################
+
+##############
+##############
+##..........##
+##.╒──────┐.##
+##.│.╔..╗.│.##
+##.│╔╫..╪╗│.##
+##.│......│.##
+##.│......│.##
+##.│╚╪..╫╝│.##
+##.│.╚..╝.│.##
+##.└──────┘.##
+##..........##
+##############
+##############
 
 #############
 #############
