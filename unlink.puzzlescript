@@ -676,12 +676,12 @@ darkred
 .0.0.
 
 HighlightSquare
-red
-.....
-.000.
-.000.
-.000.
-.....
+yellow
+..0..
+..0..
+00.00
+..0..
+..0..
 
 
 =======
@@ -1531,7 +1531,9 @@ WINCONDITIONS
 LEVELS
 =======
 
+
 message All hands on deck! Click and drag crates onto the targets.
+(Basic mouse-based sokoban introduction)
 
 ###########
 ###########
@@ -1546,6 +1548,7 @@ message All hands on deck! Click and drag crates onto the targets.
 ###########
 
 message Click and drag on the rope to deform it. Ropes are blocked by crates and vice-versa!
+(Doesn't require any fancy deformations of the rope)
 
 ###########
 ###########
@@ -1559,8 +1562,25 @@ message Click and drag on the rope to deform it. Ropes are blocked by crates and
 ###########
 ###########
 
+message Some levels contain cross targets. There must be a rope crossing on each target and no crossings anywhere else.
+(Again no fancy rope manipulation required.
+ It's maybe a little awkward that this level permits 5-6 moves even though they're only introduced in the next one.
+ Maybe we should put crates inside the rope instead.)
+
+###########
+###########
+##o...╒─┐##
+##....│+│##
+##..┌─╂─┘##
+##..│.│..##
+##┌─╂─┘..##
+##│+│....##
+##└─┘...*##
+###########
+###########
 
 message Click a corner of the rope to wind it into a tight loop. Click the crossing of a tight loop to unwind it.
+(One of the few levels without any crates. Not sure how to add one in an interesting way though.)
 
 ###########
 ###########
@@ -1575,6 +1595,7 @@ message Click a corner of the rope to wind it into a tight loop. Click the cross
 ###########
 
 message Right click the rope to nail it down before dragging in order to create new bends.
+(Introduction to right clicking.)
 
 ###########
 ###########
@@ -1588,9 +1609,27 @@ message Right click the rope to nail it down before dragging in order to create 
 ###########
 ###########
 
-message placeholder message text goes here
+message You can drag a shorter rope segment over a longer parallel piece of rope.
+(Feels a little inelegant, but I like the idea of priming the player for the 3-4 move
+ with the correct initial shape and then requiring them to pull off another themselves
+ using nails.
+ Also, this permits some flip moves, which may be confusing.)
 
+#############
+#############
+##╒──┐.┌──┐##
+##│o.└─┘.o│##
+##└───────┘##
+##...+.+...##
+##..+...+..##
+##..+...+..##
+##.*.###.*.##
+##...###...##
+#############
+#############
 
+message Try dragging a corner of one rope diagonally across another!
+(Introduction to flip moves)
 
 ###############
 ###############
@@ -1604,26 +1643,8 @@ message placeholder message text goes here
 ###############
 
 
-(maybe replace this level?  I don't think it has much of a reason to be in the game at this point)
-message Some levels contain cross targets. There must be a rope crossing on each target and no crossings anywhere else.
-
-###############
-###############
-##...........##
-##...........##
-##...........##
-##....╒──┐...##
-##...╓╂─┐│...##
-##.+.││.││.+.##
-##...│└─╂┘...##
-##...└──┘....##
-##...........##
-##...........##
-##...........##
-###############
-###############
-
-message placeholder message goes here
+message There are many varieties of these diagonal moves. Keep experimenting with them!
+(Introduces 1-2 move)
 
 ############
 ############
@@ -1638,51 +1659,17 @@ message placeholder message goes here
 ############
 ############
 
-message Barrels are like crates, but with fewer corners!
+(Introduces 7-8 move by heavily constraining the solution space.)
 
 ###########
 ###########
-##..╒─┐..##
-##..│U│..##
-##┌─╂─┘*.##
-##│o│....##
-##└─┘....##
-##.._....##
-##.......##
+##...╒──┐##
+##.*┌┿─┐│##
+##┌─╂┿─╂┘##
+##│o││.│.##
+##└─┘└─┘.##
 ###########
 ###########
-
-#############
-#############
-##.........##
-##...+.+...##
-##..╒───┐..##
-##.+│╓─┐│+.##
-##..││.││..##
-##.+│└─┘│+.##
-##..└───┘..##
-##...+.+...##
-##.........##
-#############
-#############
-
-#################
-#################
-##.............##
-##.............##
-##....╒──┐.....##
-##....│┌─╂┐....##
-##....││O││....##
-##....│└┐││....##
-##...┌┘┌┿┘│....##
-##..┌╂─┿┿─┘....##
-##..└╂─┘│......##
-##...└──┘......##
-##.............##
-##.............##
-##............*##
-#################
-#################
 
 #############
 #############
@@ -1701,17 +1688,38 @@ message Barrels are like crates, but with fewer corners!
 #############
 #############
 
+message This is a rope target. It must be matched exactly by a rope. Make sure the crossings have the correct rope on top!
+
+#############
+#############
+##.........##
+##.........##
+##...╒─┐...##
+##...│.│...##
+##...└─┘...##
+##.........##
+##...╔╗╔╗..##
+##..╔╪╫╪╝..##
+##..╚╝╚╝...##
+##.........##
+##.........##
+#############
+#############
+
 #################
 #################
-##╒───┐###┌───┐##
-##│...│###│...│##
-##│...└─┐.│...│##
-##│o._┌─╂─┘*.u│##
-##│...│.└─┐...│##
-##│...│###│...│##
-##└───┘###└───┘##
+##.............##
+##.............##
+##...╒─┐.╔═╗...##
+##..╓╂┐│.║╔╪╗..##
+##..│└╂┘.╚╪╝║..##
+##..└─┘...╚═╝..##
+##.............##
+##.............##
 #################
 #################
+
+message Hint: if you repeatedly click on a corner you can toggle between the two orientations of the new loop.
 
 #############
 #############
@@ -1726,6 +1734,49 @@ message Barrels are like crates, but with fewer corners!
 ##.........##
 #############
 #############
+
+##############
+##############
+##..........##
+##.╔══════╗.##
+##.║╒───┐.║.##
+##.║│┌─┐│.║.##
+##.║││┌┿╂┐║.##
+##.║││└╂┘│║.##
+##.║│└─╂─┘║.##
+##.║└──┘..║.##
+##.╚══════╝.##
+##..........##
+##############
+##############
+
+message Barrels are like crates, but with fewer corners!
+
+###########
+###########
+##..╒─┐..##
+##..│U│..##
+##┌─╂─┘*.##
+##│o│....##
+##└─┘....##
+##.._....##
+##.......##
+###########
+###########
+
+#################
+#################
+##╒───┐###┌───┐##
+##│...│###│...│##
+##│...└─┐.│...│##
+##│o._┌─╂─┘*.u│##
+##│...│.└─┐...│##
+##│...│###│...│##
+##└───┘###└───┘##
+#################
+#################
+
+message Fair winds! You'll need them.
 
 #################
 #################
@@ -1799,6 +1850,24 @@ message Barrels are like crates, but with fewer corners!
 ##.............##
 ##.............##
 ##.............##
+#################
+
+#################
+#################
+##.............##
+##.............##
+##....╒──┐.....##
+##....│┌─╂┐....##
+##....││O││....##
+##....│└┐││....##
+##...┌┘┌┿┘│....##
+##..┌╂─┿┿─┘....##
+##..└╂─┘│......##
+##...└──┘......##
+##.............##
+##.............##
+##............*##
+#################
 #################
 
 #############
