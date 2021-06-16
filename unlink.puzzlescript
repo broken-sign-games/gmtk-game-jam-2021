@@ -173,6 +173,22 @@ Wall_v2
 Wall_v3
 transparent
 
+RockAbove
+#555 #888 #DEF4FD 
+.....
+.....
+.....
+.....
+..1..
+
+Rock
+#555 #888 #DEF4FD 
+..11.
+.001.
+.000.
+20002
+.222.
+
 abovedecocrate
 #4D301C #643C23 #764B2C
 .....
@@ -1688,6 +1704,7 @@ LEGEND
 
 . = Background
 # = Wall
+R = Wall and Rock
 * = CrateTarget
 _ = BarrelTarget
 (+ = CrossTarget)
@@ -1844,7 +1861,7 @@ KnotB = Down_ or Right_
 Plank = Plank1 or Plank2 or Plank3 or Plank4 or Plank5 or Plank6
 PlankDecoBelow = Plank1Below
 
-AboveDeco = abovedecocrate or abovedecobarrel
+AboveDeco = abovedecocrate or abovedecobarrel or RockAbove
 AboveCursor = CursorCrateAbove or CursorBarrelAbove
 (BelowDeco = PlankDecoBelow)
 
@@ -1914,6 +1931,7 @@ HighRight
 
 Obstacle
 WallDeco
+Rock
 
 LowUpDeco
 LowDownDeco
@@ -2445,6 +2463,7 @@ late [ Isometric ] -> [ ]
 
 late up [ Crate | ] -> [ Crate | abovedecocrate ]
 late up [ Barrel | ] -> [ Barrel | abovedecobarrel ]
+late up [ Rock | ] -> [ Rock | RockAbove ]
 
 late up [ CursorActive Crate | ] -> [ CursorCrate Crate | CursorCrateAbove ]
 late up [ CursorActive Barrel | ] -> [ CursorBarrel Barrel | CursorBarrelAbove ]
@@ -2967,3 +2986,17 @@ message Fair winds! You'll need them.
 #####################
 
 message Thanks for playing our game!
+
+#############
+#############
+###.......###
+##.........##
+##......*..##
+##...╒─┐...##
+##...│r│...##
+##.╒─┿─┘...##
+##.│o│.....##
+##.└─┘.....##
+###.......###
+#############
+#############
