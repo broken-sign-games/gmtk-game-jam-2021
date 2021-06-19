@@ -1839,6 +1839,7 @@ KnotB = Down_ or Right_
 Plank = Plank1 or Plank2 or Plank3 or Plank4 or Plank5 or Plank6
 PlankDecoBelow = Plank1Below
 
+PlankPlain = Plank2 or Plank3 or Plank4 or Plank5 or Plank6
 P3R = Plank4 or Plank1
 
 P4R = Plank5 or Plank1
@@ -1969,6 +1970,8 @@ right [ Plank1 | no Plank ] -> [ Plank1 | Plank2 ]
 + right [ Plank4 | no Plank ] -> [ Plank4 | random P4R ]
 + right [ Plank5 | no Plank ] -> [ Plank5 | random P5R ]
 + right [ Plank6 | no Plank ] -> [ Plank6 | Plank1 ]
+
+down [ Plank1 | Plank1 ] -> [ Plank1 | random PlankPlain ]
 
 down [ Plank1 | ] -> [ Plank1 | Plank1Below ]
 
