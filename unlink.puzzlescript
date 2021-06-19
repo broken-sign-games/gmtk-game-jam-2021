@@ -47,6 +47,8 @@ Plank1
 ..0..
 ..0..
 
+(We're not using pseudo-3D sprites for this, because they
+ would poke out above any objects on the cell above.)
 Plank1Below
 #935b33
 ..0..
