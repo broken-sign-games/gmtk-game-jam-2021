@@ -97,6 +97,14 @@ Plank6
 .....
 .....
 
+PlankFront
+#643C23 #DEF4FD
+00000
+11111
+.....
+.....
+.....
+
 CursorActiveStill
 #EA7420
 00.00
@@ -147,17 +155,17 @@ Wall
 Wall_v1
 #DEF4FD
 .....
+.....
 ..0..
 .0.0.
 0...0
-.....
 
 Wall_v2
 #DEF4FD
 .....
+.....
 ..0..
 .0.0.
-.....
 .....
 
 Wall_v3
@@ -168,7 +176,6 @@ Rock
 ..1..
 ..11.
 .001.
-.000.
 20002
 .222.
 
@@ -1896,6 +1903,7 @@ HighRight
 
 Obstacle
 WallDeco
+PlankFront
 Rock
 
 LowUpDeco
@@ -1963,6 +1971,8 @@ right [ Plank1 | no Plank ] -> [ Plank1 | Plank2 ]
 + right [ Plank6 | no Plank ] -> [ Plank6 | Plank1 ]
 
 down [ Plank1 | ] -> [ Plank1 | Plank1Below ]
+
+down [ no Wall | Wall ] -> [ no Wall | Wall PlankFront ]
 
 (todo - replace certain cancels with feedback)
 
