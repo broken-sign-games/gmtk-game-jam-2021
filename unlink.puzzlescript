@@ -1676,6 +1676,33 @@ x11y8
 00000
 00000
 
+longmoveover
+pink
+
+longmoveunder
+pink
+
+blocked
+pink
+
+blockedendpoint
+pink
+
+closetarget
+pink
+
+fartarget
+pink
+
+active
+pink
+
+lmooverride
+pink
+
+lmuoverride
+pink
+
 =======
 LEGEND
 =======
@@ -1852,6 +1879,10 @@ image = x0y0 or x0y1 or x0y2 or x0y3 or x0y4 or x0y5 or x0y6 or x0y7 or x0y8 or 
 
 a = x0y0
 
+cftarget = closetarget or fartarget
+
+longmove = longmoveover or longmoveunder
+
 =======
 SOUNDS
 =======
@@ -1934,6 +1965,16 @@ loc
 WinCon
 
 image
+
+longmoveover
+longmoveunder
+lmooverride
+lmuoverride
+blocked
+blockedendpoint
+closetarget
+fartarget
+active
 
 ======
 RULES
@@ -2128,17 +2169,12 @@ right [ > LowVertical Temp | ] -> [ > LowVertical LowRight | LowLeft ]
 
 [ CursorActive High Low ] -> [ CursorActive High Low Overlay ]
 
-(moves 3 + 4) ((((((((((((((((((((((((((((()))))))))))))))))))))))))))))
+(moves 3 + 4) ((((((((((((((((((((((((((((())))))))))))))))))))))))))))) (CHANGES START HERE) (this is a lie)
 
 [ CursorActive | | drag ] -> [ > CursorActiveMoved | | ]
 
 [ vertical CursorActive Horizontal_ ] -> [ vertical CursorActive vertical Horizontal_ ] 
 [ horizontal CursorActive Vertical_ ] -> [ horizontal CursorActive horizontal Vertical_ ]
-
-up [ moving Up_ Tweak | no Tweak ] -> [ Up_ Tweak | ]
-down [ moving Down_ Tweak | no Tweak ] -> [ Down_ Tweak | ]
-left [ moving Left_ Tweak | no Tweak ] -> [ Left_ Tweak | ]
-right [ moving Right_ Tweak | no Tweak ] -> [ Right_ Tweak | ]
 
 up [ moving Up_ | Down_ ] -> [ moving Up_ | moving Down_ ]
 + [ moving Down_ Up_ no Tweak ] -> [ moving Down_ moving Up_ ]
@@ -2152,245 +2188,195 @@ left [ moving Left_ | Right_ ] -> [ moving Left_ | moving Right_ ]
 right [ moving Right_ | Left_ ] -> [ moving Right_ | moving Left_ ]
 + [ moving Left_ Right_ no Tweak ] -> [ moving Left_ moving Right_ ]
 
-[ moving Knot Overlay ] -> cancel
+[ > Knot | | ] -> [ active > Knot | closetarget | fartarget ]
 
-[ > Horizontal_ | Vertical_ no Overlay ] -> cancel
-[ > Vertical_ | Horizontal_ no Overlay ] -> cancel
 
-[ > Horizontal_ | LowVertical ] [ > Horizontal_ | HighVertical ] -> cancel
-[ > Vertical_ | LowHorizontal ] [ > Vertical_ | HighHorizontal ] -> cancel
+[ moving Knot Overlay ] -> [ moving Knot Overlay blockedendpoint ]
 
-[ > Horizontal_ | LowVertical ] -> [ > Horizontal_ | LowVertical lowertag ]
-[ > Vertical_ | LowHorizontal ] -> [ > Vertical_ | LowHorizontal lowertag ]
-
-[ > Up_ | no Up_ ] -> cancel
-[ > Down_ | no Down_ ] -> cancel
-[ > Left_ | no Left_ ] -> cancel
-[ > Right_ | no Right_ ] -> cancel
-
-[ > Up_ | | Up_ ] -> cancel
-[ > Down_ | | Down_ ] -> cancel
-[ > Left_ | | Left_ ] -> cancel
-[ > Right_ | | Right_ ] -> cancel
-
-up [ no Up_ > Knot | | Knot ] -> cancel
-down [ no Down_ > Knot | | Knot ] -> cancel
-left [ no Left_ > Knot | | Knot ] -> cancel
-right [ no Right_ > Knot | | Knot ] -> cancel
-
-[ > Knot | Obstacle] -> cancel
-
-up [ > Knot | | Obstacle no HighDown ] -> cancel
-down [ > Knot | | Obstacle no HighUp ] -> cancel
-left [ > Knot | | Obstacle no HighRight ] -> cancel
-right [ > Knot | | Obstacle no HighLeft ] -> cancel
-
-[ moving Horizontal_ Vertical_ no Overlay ] -> [ moving Horizontal_ Vertical_ Temp ]
-[ Horizontal_ moving Vertical_ no Overlay ] -> [ Horizontal_ moving Vertical_ Temp ]
-
-[ moving Horizontal_ Tweak no Overlay ] -> [ moving Horizontal_ Tweak Temp ]
-[ moving Vertical_ Tweak no Overlay ] -> [ moving Vertical_ Tweak Temp ]
-
-[ moving Horizontal_ Anchor no Overlay ] -> [ moving Horizontal_ Anchor Temp ]
-[ moving Vertical_ Anchor no Overlay ] -> [ moving Vertical_ Anchor Temp ]
-
-up [ > Horizontal_ Temp Up_ | Down_ Up_ | Down_ ] -> [ > Horizontal_ | | ]
-up [ lowertag ] [ > Horizontal_ Temp | | ] -> [ lowertag ] [ > Horizontal_ HighUp | LowDown LowUp | HighDown ]
-up [ > Horizontal_ Temp | | ] -> [ > Horizontal_ HighUp | HighDown HighUp LowLeft LowRight no HighLeft no HighRight | HighDown ]
-
-down [ > Horizontal_ Temp Down_ | Up_ Down_ | Up_ ] -> [ > Horizontal_ | | ]
-down [ lowertag ] [ > Horizontal_ Temp | | ] -> [ lowertag ] [ > Horizontal_ HighDown | LowUp LowDown | HighUp ]
-down [ > Horizontal_ Temp | | ] -> [ > Horizontal_ HighDown | HighUp HighDown LowLeft LowRight no HighLeft no HighRight | HighUp ]
-
-left [ > Vertical_ Temp Left_ | Right_ Left_ | Right_ ] -> [ > Vertical_ | | ]
-left [ lowertag ] [ > Vertical_ Temp | | ] -> [ lowertag ] [ > Vertical_ HighLeft | LowRight LowLeft | HighRight ]
-left [ > Vertical_ Temp | | ] -> [ > Vertical_ HighLeft | HighRight HighLeft LowUp LowDown no HighUp no HighDown | HighRight ]
-
-right [ > Vertical_ Temp Right_ | Left_ Right_ | Left_ ] -> [ > Vertical_ | | ]
-right [ lowertag ] [ > Vertical_ Temp | | ] -> [ lowertag ] [ > Vertical_ HighRight | LowLeft LowRight | HighLeft ]
-right [ > Vertical_ Temp | | ] -> [ > Vertical_ HighRight | HighLeft HighRight LowUp LowDown no HighUp no HighDown | HighLeft ]
-
-[ lowertag ] -> [ ]
+up [ no Up_ active > Knot | | Knot ] -> [ blockedendpoint active > Knot | | Knot ]
+down [ no Down_ active > Knot | | Knot ] -> [ blockedendpoint active > Knot | | Knot ]
+left [ no Left_ active > Knot | | Knot ] -> [ blockedendpoint active > Knot | | Knot ]
+right [ no Right_ active > Knot | | Knot ] -> [ blockedendpoint active > Knot | | Knot ]
 
 
 
-[ > Knot | | ] -> [ | | Knot ]
+[ active > Knot | Obstacle] -> [ blocked active > Knot | Obstacle]
+
+up [ active > Knot | | Obstacle no HighDown ] -> [ blocked active > Knot | | Obstacle ]
+down [ active > Knot | | Obstacle no HighUp ] -> [ blocked active > Knot | | Obstacle ]
+left [ active > Knot | | Obstacle no HighRight ] -> [ blocked active > Knot | | Obstacle ]
+right [ active > Knot | | Obstacle no HighLeft ] -> [ blocked active > Knot | | Obstacle ]
+
+
+[ cftarget Up_ ] -> [ cftarget up Up_ ]
+[ cftarget Down_ ] -> [ cftarget down Down_ ]
+[ cftarget Left_ ] -> [ cftarget left Left_ ]
+[ cftarget Right_ ] -> [ cftarget right Right_ ]
+
+
+
+up [ active > Knot | | Up_ Horizontal_ ] -> [ active > Knot blocked | | Up_ Horizontal_ ]
+down [ active > Knot | | Down_ Horizontal_ ] -> [ active > Knot blocked | | Down_ Horizontal_ ]
+left [ active > Knot | | Left_ Vertical_ ] -> [ active > Knot blocked | | Left_ Vertical_ ]
+right [ active > Knot | | Right_ Vertical_ ] -> [ active > Knot blocked | | Right_ Vertical_ ]
+
+[ active > Up_ | | Up_ ] -> [ active > Up_ blocked | | Up_ ]
+[ active > Down_ | | Down_ ] -> [ active > Down_ blocked | | Down_ ]
+[ active > Left_ | | Left_ ] -> [ active > Left_ blocked | | Left_ ]
+[ active > Right_ | | Right_ ] -> [ active > Right_ blocked | | Right_ ] 
+
+[ active > Low | no Overlay ] -> [ active > Low longmoveunder | longmoveunder ]
+[ active > High Overlay | no Overlay ] -> [ active > High Overlay longmoveover | longmoveover ]
+
+(probably cursed)
+[ active > Low | < Low ] -> [ active > Low longmoveunder | < Low longmoveunder ]
+[ active > High | ^ Low ] -> [ active > High longmoveover | ^ Low longmoveover ]
+
+
+[ active > High | < Low | ] -> [ active > High | < Low | lmooverride ]
+[ active > Low | ^ Low | ] -> [ active > Low | ^ Low | lmuoverride ]
+()
+
+[ active > Knot no Overlay | < Low ] -> [ active > Knot longmoveunder | < Low longmoveunder ]
+[ active > Knot no Overlay | ^ Low ] -> [ active > Knot longmoveover | ^ Low longmoveover ]
+
+[ closetarget longmove > Knot | cftarget ] -> [ closetarget longmove > Knot | cftarget longmove ]
+
+[ active > Knot longmove | longmoveover longmoveunder ] -> [ active > Knot longmove blocked | longmoveover longmoveunder ]
+
+[ > Knot ] -> [ Knot ]
+
+[ longmoveover longmoveunder ] -> [ ]
+
+[ lmooverride ] -> [ longmoveover no longmoveunder ]
+[ lmuoverride ] -> [ longmoveunder no longmoveover ]
+
+
+[ vertical CursorActive Horizontal_ no Blocked ] -> [ vertical CursorActive vertical Horizontal_ ] 
+[ horizontal CursorActive Vertical_ no Blocked ] -> [ horizontal CursorActive horizontal Vertical_ ]
+
+up [ moving Up_ | blocked ] -> [ Up_ | blocked ]
+down [ moving Down_ | blocked ] -> [ Down_ | blocked ]
+left [ moving Left_ | blocked ] -> [ Left_ | blocked ]
+right [ moving Right_ | blocked ] -> [ Right_ | blocked ]
+
+up [ moving Up_ | Down_ ] -> [ moving Up_ | moving Down_ ]
++ up [ moving Down_ Up_ no Tweak | no blocked ] -> [ moving Down_ moving Up_ | ]
+
+down [ moving Down_ | Up_ ] -> [ moving Down_ | moving Up_ ]
++ down [ moving Up_ Down_ no Tweak | no blocked ] -> [ moving Up_ moving Down_ | ]
+
+left [ moving Left_ | Right_ ] -> [ moving Left_ | moving Right_ ]
++ left [ moving Right_ Left_ no Tweak | no blocked ] -> [ moving Right_ moving Left_ | ]
+
+right [ moving Right_ | Left_ ] -> [ moving Right_ | moving Left_ ]
++ right [ moving Left_ Right_ no Tweak | no blocked ] -> [ moving Left_ moving Right_ | ]
+
+[ moving CursorActive | ... | moving Knot no blockedendpoint ] -> [ moving CursorActive Temp | ... | moving Knot no blockedendpoint Temp ] 
+
+[ Temp | | ... | Temp ] -> [ Temp | Temp | ... | Temp ]
+
+
+
+[ > Knot ] -> [ Knot ]
+
+
+[ perpendicular CursorActive blockedendpoint | no Temp ] -> [ CursorActive blockedendpoint | ]
+
+
+[ vertical CursorActive Horizontal_ Temp ] -> [ vertical CursorActive vertical Horizontal_ Temp ] 
+[ horizontal CursorActive Vertical_ Temp ] -> [ horizontal CursorActive horizontal Vertical_ Temp ]
+
+up [ moving Up_ | no Temp ] -> [ Up_ | ]
+down [ moving Down_ | no Temp ] -> [ Down_ | ]
+left [ moving Left_ | no Temp ] -> [ Left_ | ]
+right [ moving Right_ | no Temp ] -> [ Right_ | ]
+
+up [ moving Up_ | Down_ ] -> [ moving Up_ | moving Down_ ]
++ up [ moving Down_ Up_ | Temp ] -> [ moving Down_ moving Up_ | Temp ]
+
+down [ moving Down_ | Up_ ] -> [ moving Down_ | moving Up_ ]
++ down [ moving Up_ Down_ | Temp ] -> [ moving Up_ moving Down_ | Temp ]
+
+left [ moving Left_ | Right_ ] -> [ moving Left_ | moving Right_ ]
++ left [ moving Right_ Left_ | Temp ] -> [ moving Right_ moving Left_ | Temp ]
+
+right [ moving Right_ | Left_ ] -> [ moving Right_ | moving Left_ ]
++ right [ moving Left_ Right_ | Temp ] -> [ moving Left_ moving Right_ | Temp ]
+
+[ Temp ] ->  [ ]
+
+[ moving Up_ no Down_ ] -> [ moving Up_ Temp ]
+[ moving Down_ no Up_ ] -> [ moving Down_ Temp ]
+[ moving Left_ no Right_ ] -> [ moving Left_ Temp ]
+[ moving Right_ no Left_ ] -> [ moving Right_ Temp ]
+
+[ moving Up_ stationary Down_ ] -> [ moving Up_ Down_ Temp ]
+[ moving Down_ stationary Up_ ] -> [ moving Down_ Up_ Temp ]
+[ moving Left_ stationary Right_ ] -> [ moving Left_ Right_ Temp ]
+[ moving Right_ stationary Left_ ] -> [ moving Right_ Left_ Temp ]
+
+
+
+
+
+
+
+
+
+
+up [ > Horizontal_ Temp Up_ | Down_ Up_ | Down_ ] -> [ | | Horizontal_ ]
+up [ > Horizontal_ Temp Up_ | Down_ | ] -> [ | Up_ | Down_ Horizontal_ ]
+up [ > Horizontal_ Temp | | ] -> [ HighUp | action HighDown action HighUp | HighDown Horizontal_ ]
+
+down [ > Horizontal_ Temp Down_ | Up_ Down_ | Up_ ] -> [ | | Horizontal_ ]
+down [ > Horizontal_ Temp Down_ | Up_ | ] -> [ | Down_ | Up_ Horizontal_ ]
+down [ > Horizontal_ Temp | | ] -> [ HighDown | action HighUp action HighDown | HighUp Horizontal_ ]
+
+left [ > Vertical_ Temp Left_ | Right_ Left_ | Right_ ] -> [ | | Vertical_ ]
+left [ > Vertical_ Temp Left_ | Right_ | ] -> [ | Left_ | Right_ Vertical_ ]
+left [ > Vertical_ Temp | | ] -> [ HighLeft | action HighRight action HighLeft | HighRight Vertical_ ]
+
+right [ > Vertical_ Temp Right_ | Left_ Right_ | Left_ ] -> [ | | Vertical_ ]
+right [ > Vertical_ Temp Right_ | Left_ | ] -> [ | Right_ | Left_ Vertical_ ]
+right [ > Vertical_ Temp | | ] -> [ HighRight | action HighLeft action HighRight | HighLeft Vertical_ ]
+
+
+[ > Knot | | ] -> [ | | action Knot ]
+
+
+[ action HighUp longmoveunder ] -> [ LowUp longmoveunder ]
+[ action HighDown longmoveunder ] -> [ LowDown longmoveunder ]
+[ action HighLeft longmoveunder ] -> [ LowLeft longmoveunder ]
+[ action HighRight longmoveunder ] -> [ LowRight longmoveunder ]
+
+[ HighUp action HighHorizontal ] -> [ LowUp action HighHorizontal ]
+[ HighDown action HighHorizontal ] -> [ LowDown action HighHorizontal ]
+[ HighLeft action HighVertical ] -> [ LowLeft action HighVertical ]
+[ HighRight action HighVertical ] -> [ LowRight action HighVertical ]
+
+[ action Knot ] -> [ Knot ]
+
+[ active ] -> [ ]
+[ cftarget ] -> [ ]
+[ longmoveunder ] -> [ ]
+[ longmoveover ] -> [ ]
+[ blocked ] -> [ ]
+[ blockedendpoint ] -> [ ]
+
+
+
+
 [ > CursorActive | | ] -> [ | | CursorActive Overlay ] sfx2
 
 [ CursorActive High Low ] -> [ CursorActive High Low Overlay ]
 
-( moves 5 + 6 ) (can't cancel in here ) (must remove CursorActive)
-( TODO: maybe highlight crossings that permit a 5 move? )
-
-[ action CursorActive Overlay HighUp ] -> [ action CursorActive Overlay HighUp move56alttag ]
-
-( 5 up )
-
-up [ action CursorActive Overlay | HighDown no Overlay no HighUp ] -> [ action CursorActive Overlay | HighDown Temp ]
-right [ HighDown Temp HighRight | HighLeft HighDown ] -> [ HighDown Temp HighRight | HighLeft HighDown Temp ]
-left [ HighDown Temp HighLeft | HighRight HighDown ] -> [ HighDown Temp HighLeft | HighRight HighDown Temp]
-down [ HighLeft HighDown Temp | HighUp HighLeft ] [ HighRight HighDown Temp ] [ CursorActive ] -> [ | ] [ ] [ HighLeft HighDown no Low no Up_ no Right_ ] sfx3
-down [ HighRight HighDown Temp | HighUp HighRight ] [ HighLeft HighDown Temp ] [ CursorActive ] -> [ | ] [ ] [ HighRight HighDown no Low no Up_ no Left_ ] sfx3
-
-[ Temp ] -> [ ]
-
-( 5 down )
- 
-down [ action CursorActive Overlay | HighUp no Overlay no HighDown ] -> [ action CursorActive Overlay | HighUp Temp ]
-right [ HighUp Temp HighRight | HighLeft HighUp ] -> [ HighUp Temp HighRight | HighLeft HighUp Temp ]
-left [ HighUp Temp HighLeft | HighRight HighUp ] -> [ HighUp Temp HighLeft | HighRight HighUp Temp]
-up [ HighLeft HighUp Temp | HighDown HighLeft ] [ HighRight HighUp Temp ] [ CursorActive ] -> [ | ] [ ] [ HighLeft HighUp no Low no Down_ no Right_ ] sfx3
-up [ HighRight HighUp Temp | HighDown HighRight ] [ HighLeft HighUp Temp ] [ CursorActive ] -> [ | ] [ ] [ HighRight HighUp no Low no Down_ no Left_ ] sfx3
-
-[ Temp ] -> [ ]
-
-[ action CursorActive Overlay ] -> [ Overlay ]
-
-[ HighUp HighDown action CursorActive ] -> [ HighUp HighDown ]
-[ HighRight HighLeft action CursorActive ] -> [ HighRight HighLeft ]
-
-[ HighUp HighLeft action CursorActive ] -> [ HighUp HighLeft action CursorActive Temp ]
-down [ Temp action CursorActive | no Knot no Obstacle ] -> [ action Temp action CursorActive | action Temp ]
-right [ action Temp | no Knot no Obstacle ] -> [ Temp | Temp ]
-down [ Temp action CursorActive | Temp ] [ Temp no CursorActive | Temp ] -> [ Temp CursorActive | Temp ] [ Temp | Temp ]
-
-[ action CursorActive ] [ Temp ] -> [ action CursorActive ] [ ]
-
-[ HighUp HighRight action CursorActive ] -> [ HighUp HighRight action CursorActive Temp ]
-down [ Temp action CursorActive | no Knot no Obstacle ] -> [ action Temp action CursorActive | action Temp ]
-left [ action Temp | no Knot no Obstacle ] -> [ Temp | Temp ]
-down [ Temp action CursorActive | Temp ] [ Temp no CursorActive | Temp ] -> [ Temp CursorActive | Temp ] [ Temp | Temp ]
-
-[ action CursorActive ] [ Temp ] -> [ action CursorActive ] [ ]
-
-[ HighDown HighLeft action CursorActive ] -> [ HighDown HighLeft action CursorActive Temp ]
-up [ Temp action CursorActive | no Knot no Obstacle ] -> [ action Temp action CursorActive | action Temp ]
-right [ action Temp | no Knot no Obstacle ] -> [ Temp | Temp ]
-up [ Temp action CursorActive | Temp ] [ Temp no CursorActive | Temp ] -> [ Temp CursorActive | Temp ] [ Temp | Temp ]
-
-[ action CursorActive ] [ Temp ] -> [ action CursorActive ] [ ]
-
-[ HighDown HighRight action CursorActive ] -> [ HighDown HighRight action CursorActive Temp ]
-up [ Temp action CursorActive | no Knot no Obstacle ] -> [ action Temp action CursorActive | action Temp ]
-left [ action Temp | no Knot no Obstacle ] -> [ Temp | Temp ]
-up [ Temp action CursorActive | Temp ] [ Temp no CursorActive | Temp ] -> [ Temp CursorActive | Temp ] [ Temp | Temp ]
-
-[ action CursorActive ] [ Temp ] -> [ action CursorActive ] [ ]
-
-right [ Temp | Temp ] -> [ Temp HighRight | HighLeft Temp ]
-down [ Temp | Temp ] -> [ Temp HighDown | HighUp Temp ]
-
-[ CursorActive Temp move56alttag ] -> [ LowUp LowDown no HighUp no HighDown ] sfx3
-[ CursorActive Temp ] -> [ LowRight LowLeft no HighRight no HighLeft ] sfx3
-
-[ Temp ] -> [ ]
-
-[ action CursorActive ] -> [ ]
-
-(rest of the moves) (((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))
-(move highlighting) (((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))
-
-[ CursorActive Vertical_ Horizontal_ no Overlay ] -> [ action CursorActive Vertical_ Horizontal_ ]
-
-up [ action CursorActive HighUp | | ] -> [ action CursorActive HighUp loc11 | loc12 | loc13 ]
-down [ action CursorActive HighDown | | ] -> [ action CursorActive HighDown loc11 | loc12 | loc13 ]
-
-left [ action CursorActive HighLeft ] [ loc | | ] -> [ action CursorActive HighLeft ] [ loc | | Temp ]
-right [ action CursorActive HighRight ] [ loc | | ] -> [ action CursorActive HighRight ] [ loc | | Temp ]
-
-
-[ loc11 | | Temp ] -> [ loc11 | loc21 | loc31 ]
-[ loc12 | | Temp ] -> [ loc12 | loc22 | loc32 ]
-[ loc13 | | Temp ] -> [ loc13 | loc23 | loc33 ]
-
-[ loc Up_ ] -> [ loc up Up_ ]
-[ loc Down_ ] -> [ loc down Down_ ]
-[ loc Left_ ] -> [ loc left Left_ ]
-[ loc Right_ ] -> [ loc right Right_ ]
-
-[ loc11 | loc12 parallel Low ] -> [ lowertag loc11 | loc12 parallel low ]
-[ loc11 | loc21 parallel Low ] -> [ lowertag loc11 | loc21 parallel low ]
-
-[ lowertag loc11 | loc12 perpendicular Low ] -> [ lowertag loc11 | loc12 perpendicular Low Temp ]
-[ lowertag loc11 | loc21 perpendicular Low ] -> [ lowertag loc11 | loc21 perpendicular Low Temp ]
-
-[ loc33 Knot ] -> [ loc33 Knot Temp ] 
-[ loc22 no Knot ] -> [ loc22 Temp ] (disallow simple corner inversions, could be allowed probably)
-
-[ loc13 | loc23 parallel Knot ] -> [ loc13 | loc23 parallel Knot Temp ]
-[ loc31 | loc32 parallel Knot ] -> [ loc31 | loc32 parallel Knot Temp ]
-
-[ loc Obstacle ] -> [ Loc Obstacle Temp ]
-
-[ Temp ] [ action CursorActive ] -> [ ] [ CursorActive ]
-
-[ loc11 > KnotB | < KnotA loc12 > KnotB | < KnotA loc13 ] -> [ Temp loc11 > KnotB | < KnotA loc12 > KnotB | < KnotA loc13 ]
-[ loc11 > KnotA | < KnotB loc12 > KnotA | < KnotB loc13 ] -> [ Temp loc11 > KnotA | < KnotB loc12 > KnotA | < KnotB loc13 ]
-[ action CursorActive no Temp ] -> [ CursorActive ]
-[ Temp ] -> [ ]
-
-[ loc11 > KnotB | < KnotA loc21 > KnotB | < KnotA loc31 ] -> [ Temp loc11 > KnotB | < KnotA loc21 > KnotB | < KnotA loc31 ]
-[ loc11 > KnotA | < KnotB loc21 > KnotA | < KnotB loc31 ] -> [ Temp loc11 > KnotA | < KnotB loc21 > KnotA | < KnotB loc31 ]
-[ action CursorActive no Temp ] -> [ CursorActive ]
-[ Temp ] -> [ ]
-
-[ action CursorActive ] [ loc33 ] -> [ CursorActive ] [ loc33 Highlightsquare ]
-
-[ HighlightSquare no drag ] [ loc ] -> [ HighlightSquare ] [ ]
-
-[ loc33 no HighlightSquare ] -> [ Temp ]
-
-[ Temp ] [ loc ] -> [ Temp ] [ ]
-
-[ Temp ] -> [ ]
-
-[ CursorActive ] [ drag HighlightSquare ] -> [ HighlightSquare ] [ CursorActiveMoved ] sfx4
-
-[ loc11 > KnotB | < KnotA loc12 > KnotB | < KnotA loc13 ] -> [ loc11 | loc12 | loc13 ]
-[ loc11 > KnotA | < KnotB loc12 > KnotA | < KnotB loc13 ] -> [ loc11 | loc12 | loc13 ]
-[ loc11 > KnotB | < KnotA loc21 > KnotB | < KnotA loc31 ] -> [ loc11 | loc21 | loc31 ]
-[ loc11 > KnotA | < KnotB loc21 > KnotA | < KnotB loc31 ] -> [ loc11 | loc21 | loc31 ]
-
-[ loc13 ] -> [ action loc13 ]
-[ loc23 ] -> [ action loc23 ]
-[ loc33 ] -> [ action loc33 ]
-[ loc32 ] -> [ action loc32 ]
-[ loc31 ] -> [ action loc31 ]
-
-up [ action loc | action loc ] -> [ action loc HighUp | action loc HighDown ]
-right [ action loc | action loc ] -> [ action loc HighRight | action loc HighLeft ]
-
-[ lowertag ] [ moving Horizontal_ loc23 stationary HighUp ] -> [ lowertag ] [ moving Horizontal_ loc23 LowUp ]
-[ lowertag ] [ moving Horizontal_ loc23 stationary HighDown ] -> [ lowertag ] [ moving Horizontal_ loc23 LowDown ]
-[ lowertag ] [ moving Vertical_ loc23 stationary HighLeft ] -> [ lowertag ] [ moving Vertical_ loc23 LowLeft ]
-[ lowertag ] [ moving Vertical_ loc23 stationary HighRight ] -> [ lowertag ] [ moving Vertical_ loc23 LowRight ]
-
-[ lowertag ] [ moving Horizontal_ loc32 stationary HighUp ] -> [ lowertag ] [ moving Horizontal_ loc32 LowUp ]
-[ lowertag ] [ moving Horizontal_ loc32 stationary HighDown ] -> [ lowertag ] [ moving Horizontal_ loc32 LowDown ]
-[ lowertag ] [ moving Vertical_ loc32 stationary HighLeft ] -> [ lowertag ] [ moving Vertical_ loc32 LowLeft ]
-[ lowertag ] [ moving Vertical_ loc32 stationary HighRight ] -> [ lowertag ] [ moving Vertical_ loc32 LowRight ]
-
-[ lowertag ] [ loc23 moving Knot ] -> [ lowertag ] [ loc23 Knot ]
-[ lowertag ] [ loc32 moving Knot ] -> [ lowertag ] [ loc32 Knot ]
-
-[ loc23 moving HighUp ] -> [ loc23 LowUp ]
-[ loc23 moving HighDown ] -> [ loc23 LowDown ]
-[ loc23 moving HighLeft ] -> [ loc23 LowLeft ]
-[ loc23 moving HighRight ] -> [ loc23 LowRight ]
-
-[ loc32 moving HighUp ] -> [ loc32 LowUp ]
-[ loc32 moving HighDown ] -> [ loc32 LowDown ]
-[ loc32 moving HighLeft ] -> [ loc32 LowLeft ]
-[ loc32 moving HighRight ] -> [ loc32 LowRight ]
-
-[ moving Knot ] -> [ Knot ]
-
-[ loc ] -> [ ]
-
-[ lowertag ] -> [ ]
-
 
 (((((((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))
+
+late [ CursorActive Tweak ] -> [ CursorActive ]
+
+(((((((((((((((((((((((((((((((((()))))))))))))))))))))))))))))))))) (changes stop here)
 
 late [ drag ] -> [ ]
 
@@ -2685,9 +2671,9 @@ message Click a corner of the rope to wind it into a tight loop. Click the cross
 (One of the few levels without any crates. Not sure how to add one in an interesting way though.)
 ###########
 ###########
-##╒┐..#####
-##└┘..#####
-##....#####
+##╒┐.....##
+##└┘.....##
+##....#..##
 ##.......##
 #####.╔╗.##
 #####.╚╫╗##
