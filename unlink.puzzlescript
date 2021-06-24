@@ -681,13 +681,13 @@ Overlay (for putting on tiles with both high and low wires) (used to be visual, 
 transparent
 
 WinConCrates
-pink
+transparent
 
 WinConCrosses
-pink
+transparent
 
 WinConRopes
-pink
+transparent
 
 Temp
 pink
@@ -809,6 +809,40 @@ HighlightSquare
 00.00
 ..0..
 ..0..
+
+HighlightUp
+#EA7420
+.....
+..0..
+.0.0.
+.....
+.....
+
+HighlightDown
+#EA7420
+.....
+.....
+.0.0.
+..0..
+.....
+
+HighlightLeft
+#EA7420
+.....
+..0..
+.0...
+..0..
+.....
+
+HighlightRight
+#EA7420
+.....
+..0..
+...0.
+..0..
+.....
+
+
 
 ((((( Title screen tiles )))))
 
@@ -1703,6 +1737,9 @@ pink
 lmuoverride
 pink
 
+nomovement
+pink
+
 =======
 LEGEND
 =======
@@ -1883,6 +1920,8 @@ cftarget = closetarget or fartarget
 
 longmove = longmoveover or longmoveunder
 
+highlight = HighlightSquare or HighlightUp or HighlightDown or HighlightLeft or HighlightRight
+
 =======
 SOUNDS
 =======
@@ -1947,7 +1986,7 @@ HighDownDeco
 HighLeftDeco
 HighRightDeco
 
-HighlightSquare
+highlight
 CursorActive
 Tweak
 
@@ -1975,6 +2014,7 @@ blockedendpoint
 closetarget
 fartarget
 active
+nomovement
 
 ======
 RULES
@@ -1999,6 +2039,8 @@ vertical [x11y0||||||||] -> [x11y0|x11y1|x11y2|x11y3|x11y4|x11y5|x11y6|x11y7|x11
 [rmb image ] -> win
 (((( End of title screen))))
 
+[ WinCon ] -> cancel
+
 random [ no Plank ] -> [ Temp ]
 
 [ ] [ Temp ] -> [ random Plank ] [ ]
@@ -2022,7 +2064,7 @@ down [ no Wall | Wall ] -> [ no Wall | Wall PlankFront ]
 
 [ moving Player ] -> cancel
 
-[ HighlightSquare ] -> [ ]
+[ highlight ] -> [ ]
 
 [ rmb Tweak ] -> [ ] sfx6
 [ rmb Knot ] -> [ Tweak Knot ] sfx6
@@ -2040,11 +2082,9 @@ down [ no Wall | Wall ] -> [ no Wall | Wall PlankFront ]
 
 [ drag Wall ] -> [ lmbup Wall ]
 
-[ CursorActive | drag ] -> [ > CursorActiveMoved | ]
+[ CursorActive | drag ] -> [ > CursorActiveMoved | drag ]
 
 [ CursorActiveMoved ] [ move56alttag ] -> [ CursorActiveMoved ] [ ]
-
-[ lmbup CursorActiveStill ] -> [ action CursorActiveStill ]
 
 [ lmbup ] [ Tweak ] -> [ lmbup ] [ ]
 [ lmbup ] [ CursorActive ] -> [ lmbup ] [ ]
@@ -2114,20 +2154,102 @@ left [ moving Left_ | Right_ ] -> [ moving Left_ | moving Right_ ]
 right [ moving Right_ | Left_ ] -> [ moving Right_ | moving Left_ ]
 + [ moving Left_ Right_ no Tweak ] -> [ moving Left_ moving Right_ ]
 
-[ > Up_ | Up_ ] -> cancel
-[ > Down_ | Down_ ] -> cancel
-[ > Left_ | Left_ ] -> cancel
-[ > Right_ | Right_ ] -> cancel
+[ > Up_ | Up_ ] -> [ > Up_ blocked | Up_ ]
+[ > Down_ | Down_ ] -> [ > Down_ blocked | Down_ ]
+[ > Left_ | Left_ ] -> [ > Left_ blocked | Left_ ]
+[ > Right_ | Right_ ] -> [ > Right_ blocked | Right_ ]
 
-up [ no Up_ > Knot | Knot ] -> cancel
-down [ no Down_ > Knot | Knot ] -> cancel
-left [ no Left_ > Knot | Knot ] -> cancel
-right [ no Right_ > Knot | Knot ] -> cancel
+up [ no Up_ > Knot | Knot ] -> [ > Knot blocked | Knot ]
+down [ no Down_ > Knot | Knot ] -> [ > Knot blocked | Knot ]
+left [ no Left_ > Knot | Knot ] -> [ > Knot blocked | Knot ]
+right [ no Right_ > Knot | Knot ] -> [ > Knot blocked | Knot ]
 
-up [ > Knot | Obstacle no HighDown ] -> cancel
-down [ > Knot | Obstacle no HighUp ] -> cancel
-left [ > Knot | Obstacle no HighRight ] -> cancel
-right [ > Knot | Obstacle no HighLeft ] -> cancel
+up [ > Knot | Obstacle no HighDown ] -> [ > Knot blocked | Obstacle ]
+down [ > Knot | Obstacle no HighUp ] -> [ > Knot blocked | Obstacle ]
+left [ > Knot | Obstacle no HighRight ] -> [ > Knot blocked | Obstacle ]
+right [ > Knot | Obstacle no HighLeft ] -> [ > Knot blocked | Obstacle ]
+
+[ > Knot Overlay ] -> [ > Knot Overlay blockedendpoint ]
+
+[ > Knot ] -> [ Knot ]
+
+(end pass 1)
+
+
+[ vertical CursorActive Horizontal_ no Blocked ] -> [ vertical CursorActive vertical Horizontal_ ] 
+[ horizontal CursorActive Vertical_ no Blocked ] -> [ horizontal CursorActive horizontal Vertical_ ]
+
+up [ moving Up_ | blocked ] -> [ Up_ | blocked ]
+down [ moving Down_ | blocked ] -> [ Down_ | blocked ]
+left [ moving Left_ | blocked ] -> [ Left_ | blocked ]
+right [ moving Right_ | blocked ] -> [ Right_ | blocked ]
+
+up [ moving Up_ | Down_ ] -> [ moving Up_ | moving Down_ ]
++ up [ moving Down_ Up_ no Tweak | no blocked ] -> [ moving Down_ moving Up_ | ]
+
+down [ moving Down_ | Up_ ] -> [ moving Down_ | moving Up_ ]
++ down [ moving Up_ Down_ no Tweak | no blocked ] -> [ moving Up_ moving Down_ | ]
+
+left [ moving Left_ | Right_ ] -> [ moving Left_ | moving Right_ ]
++ left [ moving Right_ Left_ no Tweak | no blocked ] -> [ moving Right_ moving Left_ | ]
+
+right [ moving Right_ | Left_ ] -> [ moving Right_ | moving Left_ ]
++ right [ moving Left_ Right_ no Tweak | no blocked ] -> [ moving Left_ moving Right_ | ]
+
+[ moving CursorActive | ... | moving Knot no blockedendpoint ] -> [ moving CursorActive Temp | ... | moving Knot no blockedendpoint Temp ] 
+
+[ Temp | | ... | Temp ] -> [ Temp | Temp | ... | Temp ]
+
+
+
+[ > Knot ] -> [ Knot ]
+
+(end pass 2)
+
+
+[ perpendicular CursorActive blockedendpoint | no Temp ] -> [ CursorActive blockedendpoint | ]
+
+
+[ vertical CursorActive Horizontal_ Temp ] -> [ vertical CursorActive vertical Horizontal_ Temp ] 
+[ horizontal CursorActive Vertical_ Temp ] -> [ horizontal CursorActive horizontal Vertical_ Temp ]
+
+up [ moving Up_ | no Temp ] -> [ Up_ | ]
+down [ moving Down_ | no Temp ] -> [ Down_ | ]
+left [ moving Left_ | no Temp ] -> [ Left_ | ]
+right [ moving Right_ | no Temp ] -> [ Right_ | ]
+
+up [ moving Up_ | Down_ ] -> [ moving Up_ | moving Down_ ]
++ up [ moving Down_ Up_ | Temp ] -> [ moving Down_ moving Up_ | Temp ]
+
+down [ moving Down_ | Up_ ] -> [ moving Down_ | moving Up_ ]
++ down [ moving Up_ Down_ | Temp ] -> [ moving Up_ moving Down_ | Temp ]
+
+left [ moving Left_ | Right_ ] -> [ moving Left_ | moving Right_ ]
++ left [ moving Right_ Left_ | Temp ] -> [ moving Right_ moving Left_ | Temp ]
+
+right [ moving Right_ | Left_ ] -> [ moving Right_ | moving Left_ ]
++ right [ moving Left_ Right_ | Temp ] -> [ moving Left_ moving Right_ | Temp ]
+
+[ Temp ] ->  [ ]
+
+[ moving Up_ no Down_ ] -> [ moving Up_ Temp ]
+[ moving Down_ no Up_ ] -> [ moving Down_ Temp ]
+[ moving Left_ no Right_ ] -> [ moving Left_ Temp ]
+[ moving Right_ no Left_ ] -> [ moving Right_ Temp ]
+
+[ moving Up_ stationary Down_ ] -> [ moving Up_ Down_ Temp ]
+[ moving Down_ stationary Up_ ] -> [ moving Down_ Up_ Temp ]
+[ moving Left_ stationary Right_ ] -> [ moving Left_ Right_ Temp ]
+[ moving Right_ stationary Left_ ] -> [ moving Right_ Left_ Temp ]
+
+
+
+(actual movement)
+
+[ > CursorActive ] -> [ > CursorActive nomovement ]
+[ > Knot nomovement ] -> [ > Knot ]
+[ > CursorActive nomovement ] -> [ CursorActive ]
+
 
 [ moving Horizontal_ Vertical_ no Overlay ] -> [ moving Horizontal_ Vertical_ Temp ]
 [ Horizontal_ moving Vertical_ no Overlay ] -> [ Horizontal_ moving Vertical_ Temp ]
@@ -2164,14 +2286,22 @@ right [ > LowVertical Temp | ] -> [ > LowVertical LowRight | LowLeft ]
 [ Overlay > Low | LowLeft ] -> [ Overlay > Low | HighLeft ]
 [ Overlay > Low | LowRight ] -> [ Overlay > Low | HighRight ]
 
+
+
 [ > Knot | ] -> [ | Knot ]
 [ > CursorActive | ] -> [ | CursorActive ] sfx1
 
 [ CursorActive High Low ] -> [ CursorActive High Low Overlay ]
 
+[ blocked ] -> [ ]
+[ blockedendpoint ] -> [ ]
+[ temp ] -> [ ]
+
 (moves 3 + 4) ((((((((((((((((((((((((((((())))))))))))))))))))))))))))) (CHANGES START HERE) (this is a lie)
 
-[ CursorActive | | drag ] -> [ > CursorActiveMoved | | ]
+[ drag | ] -> [ drag Temp | Temp ]
+
+[ CursorActive | | Temp | no drag ] -> [ > CursorActiveMoved | | | ]
 
 [ vertical CursorActive Horizontal_ ] -> [ vertical CursorActive vertical Horizontal_ ] 
 [ horizontal CursorActive Vertical_ ] -> [ horizontal CursorActive horizontal Vertical_ ]
@@ -2251,6 +2381,8 @@ right [ active > Knot | | Right_ Vertical_ ] -> [ active > Knot blocked | | Righ
 [ lmooverride ] -> [ longmoveover no longmoveunder ]
 [ lmuoverride ] -> [ longmoveunder no longmoveover ]
 
+(end pass 1)
+
 
 [ vertical CursorActive Horizontal_ no Blocked ] -> [ vertical CursorActive vertical Horizontal_ ] 
 [ horizontal CursorActive Vertical_ no Blocked ] -> [ horizontal CursorActive horizontal Vertical_ ]
@@ -2279,6 +2411,8 @@ right [ moving Right_ | Left_ ] -> [ moving Right_ | moving Left_ ]
 
 
 [ > Knot ] -> [ Knot ]
+
+(end pass 2)
 
 
 [ perpendicular CursorActive blockedendpoint | no Temp ] -> [ CursorActive blockedendpoint | ]
@@ -2320,9 +2454,20 @@ right [ moving Right_ | Left_ ] -> [ moving Right_ | moving Left_ ]
 
 
 
+(actual movemet)
 
+[ > CursorActive ] -> [ > CursorActive nomovement ]
+[ > Knot nomovement ] -> [ > Knot ]
+[ > CursorActive nomovement ] -> [ CursorActive ]
 
+[ > CursorActive | drag | ] -> [ CursorActive | drag | > HighlightSquare ]
 
+[ HighlightSquare ] [ > Knot ] -> [ HighlightSquare ] [ Knot ]
+
+[ up HighlightSquare ] -> [ HighlightUp ]
+[ down HighlightSquare ] -> [ HighlightDown ]
+[ left HighlightSquare ] -> [ HighlightLeft ]
+[ right HighlightSquare ] -> [ HighlightRight ]
 
 
 up [ > Horizontal_ Temp Up_ | Down_ Up_ | Down_ ] -> [ | | Horizontal_ ]
@@ -2363,6 +2508,7 @@ right [ > Vertical_ Temp | | ] -> [ HighRight | action HighLeft action HighRight
 [ longmoveover ] -> [ ]
 [ blocked ] -> [ ]
 [ blockedendpoint ] -> [ ]
+[ Temp ] -> [ ]
 
 
 
@@ -2415,7 +2561,7 @@ late [ Overlay no CrossTarget ] [ WinConCrosses ] -> [ Overlay ] [ ]
 
 late [ Target no WinCon ] [ WinCon ] -> [ Target ] [ ]
 
-late [ WinCon ] -> [ ] win sfx5
+late [ WinCon ] -> win sfx5
 
 
 
