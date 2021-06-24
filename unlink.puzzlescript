@@ -1816,6 +1816,7 @@ _ = BarrelTarget
 (+ = CrossTarget)
 O = Crate
 U = Barrel
+W = Barrel and BarrelTarget
 
 i = MovableAnchor and HighUp
 k = MovableAnchor and HighDown
@@ -2834,7 +2835,7 @@ a...........
 ............
 ............
 
-message All hands on deck! Click and drag crates onto the targets.
+message All hands on deck! Click and drag the crates.
 (Basic mouse-based sokoban introduction)
 
 ###########
@@ -2849,21 +2850,79 @@ message All hands on deck! Click and drag crates onto the targets.
 ###########
 ###########
 
-message Click and drag on the rope to deform it. Ropes are blocked by crates and vice-versa!
+message You can also click and drag ropes to deform them.
 (Doesn't require any fancy deformations of the rope)
 
 ############
 ############
-##..╒─┐...##
-##..│o│...##
-##┌─╂─┘.*.##
-##│o│.....##
+####╒─┐...##
+####│o│...##
+##┌─╂─┘...##
+##│o│...*.##
 ##└─┘.....##
 ##........##
-##..*.....##
+##...*..####
+##......####
+############
+############
+
+(Introduction to implicit rope bending, though people have likely encountered
+ some form of it in the previous level.)
+
+###########
+###########
+####...####
+####.*.####
+##.╒───┐.##
+##.│ooo│.##
+##.└───┘.##
+##.*.#.*.##
+##...#...##
+###########
+###########
+
+#############
+#############
+###.......###
+##.........##
+##......*..##
+##...╒─┐...##
+##...│r│...##
+##.╒─┿─┘...##
+##.│o│.....##
+##.└─┘.....##
+###.......###
+#############
+#############
+
+message Barrels are like crates, but with fewer corners!
+
+############
+############
+####╒─┐...##
+####│u│...##
+##┌─╂─┘...##
+##│o│...*.##
+##└─┘.....##
 ##........##
+##..._..####
+##......####
 ############
 ############
+
+(Introduction to type 2 Reidemeister moves)
+
+###########
+###########
+####╒─┐####
+####│o│####
+##..└─┿─┐##
+##.*.w│*│##
+##..┌─┿─┘##
+####│o│####
+####└─┘####
+###########
+###########
 
 message This is a rope target. It must be matched exactly by a rope.
 (Again no fancy rope manipulation required.)
@@ -2881,37 +2940,17 @@ message This is a rope target. It must be matched exactly by a rope.
 ############
 ############
 
-message Click a corner of the rope to wind it into a tight loop. Click the crossing of a tight loop to unwind it.
-(One of the few levels without any crates. Not sure how to add one in an interesting way though.)
 ###########
 ###########
-##╒┐.....##
-##└┘.....##
-##....#..##
 ##.......##
-#####.╔╗.##
-#####.╚╫╗##
-#####..╚╝##
+##.o.....##
+##...═...##
+##..║*║..##
+##...═...##
+##.....╒┐##
+##.....└┘##
 ###########
 ###########
-
-message Right click the rope to nail it down before dragging in order to create new bends.
-(Introduction to right clicking.)
-
-###########
-###########
-####...####
-####.*.####
-##.╒───┐.##
-##.│ooo│.##
-##.└───┘.##
-##.*.#.*.##
-##...#...##
-###########
-###########
-
-message You can drag a shorter rope segment over a longer parallel piece of rope.
-(Introduction to 3-4 moves)
 
 #############
 #############
@@ -2927,8 +2966,35 @@ message You can drag a shorter rope segment over a longer parallel piece of rope
 #############
 #############
 
-message Try dragging a corner of one rope diagonally across another!
-(Introduction to flip moves)
+message Nail down the rope with right-click to create additional bends.
+
+############
+############
+##..╔══╗..##
+##..║..║..##
+##╔═╝..╚═╗##
+##║..╒┐..║##
+##║..└┘..║##
+##╚═╗..╔═╝##
+##..║..║..##
+##..╚══╝..##
+############
+############
+
+(Introduction to type 1 Reidemeister moves)
+
+###########
+###########
+##.......##
+##.╒┐....##
+##.└┘.r..##
+##.......##
+#####.╔╗.##
+#####.╚╫╗##
+#####..╚╝##
+###########
+###########
+
 
 ###############
 ###############
@@ -2942,24 +3008,21 @@ message Try dragging a corner of one rope diagonally across another!
 ###############
 
 
-message There are many varieties of these diagonal moves. Keep experimenting with them!
-(Introduces 1-2 move)
-
 ############
 ############
 ##╒─┐.....##
-##│o│.....##
+##│u│.....##
 ##└─╂──┐..##
-##..│.*│..##
-##..│*.│..##
+##..│._│..##
+##..│_.│..##
 ##..└──┿─┐##
-##.....│o│##
+##.....│u│##
 ##.....└─┘##
 ############
 ############
 
-(Introduces 7-8 move by heavily constraining the solution space.)
-
+(This was supposed to introduce type 3 Reidemeister moves, but I'm pretty sure
+ people wouldn't notice the significance of it.)
 ###########
 ###########
 ##...╒──┐##
@@ -2969,6 +3032,19 @@ message There are many varieties of these diagonal moves. Keep experimenting wit
 ##└─┘└─┘.##
 ###########
 ###########
+
+#################
+#################
+##.............##
+##.............##
+##...╒─┐.╔═╗...##
+##..╓╂┐│.║╔╪╗..##
+##..│└╂┘.╚╪╝║..##
+##..└─┘...╚═╝..##
+##.............##
+##.............##
+#################
+#################
 
 ################
 ################
@@ -2989,7 +3065,7 @@ message There are many varieties of these diagonal moves. Keep experimenting wit
 ##└─┿─┐╔═╫═╝##
 ##..│o│║*║..##
 ##╒─┿─┘╚═╫═╗##
-##│o│....║*║##
+##│u│....║_║##
 ##└─┘....╚═╝##
 ##############
 ##############
@@ -3011,8 +3087,6 @@ message There are many varieties of these diagonal moves. Keep experimenting wit
 #############
 #############
 
-message Make sure the right rope is on top when matching rope targets! When creating corner loops, you can click the corner several times to toggle between the two orientations.
-
 #############
 #############
 ##.........##
@@ -3028,19 +3102,6 @@ message Make sure the right rope is on top when matching rope targets! When crea
 ##.........##
 #############
 #############
-
-#################
-#################
-##.............##
-##.............##
-##...╒─┐.╔═╗...##
-##..╓╂┐│.║╔╪╗..##
-##..│└╂┘.╚╪╝║..##
-##..└─┘...╚═╝..##
-##.............##
-##.............##
-#################
-#################
 
 ##############
 ##############
@@ -3085,20 +3146,6 @@ message Make sure the right rope is on top when matching rope targets! When crea
 ##..........##
 ##############
 ##############
-
-message Barrels are like crates, but with fewer corners!
-
-###########
-###########
-##..╒─┐..##
-##..│U│..##
-##┌─╂─┘*.##
-##│o│....##
-##└─┘....##
-##.._....##
-##.......##
-###########
-###########
 
 #################
 #################
@@ -3155,17 +3202,3 @@ message Fair winds! You'll need them.
 #####################
 
 message Thanks for playing our game!
-
-#############
-#############
-###.......###
-##.........##
-##......*..##
-##...╒─┐...##
-##...│r│...##
-##.╒─┿─┘...##
-##.│o│.....##
-##.└─┘.....##
-###.......###
-#############
-#############
