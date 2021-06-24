@@ -728,7 +728,7 @@ pink
 
 
 TargetCrossVertical
-#E5DAC7
+#764B2C
 .0.0.
 00.00
 .0.0.
@@ -736,7 +736,7 @@ TargetCrossVertical
 .0.0.
 
 TargetCrossHorizontal
-#E5DAC7
+#764B2C
 .0.0.
 00000
 .....
@@ -744,7 +744,7 @@ TargetCrossHorizontal
 .0.0.
 
 TargetUpDown
-#E5DAC7
+#764B2C
 .0.0.
 .0.0.
 .0.0.
@@ -752,7 +752,7 @@ TargetUpDown
 .0.0.
 
 TargetLeftRight
-#E5DAC7
+#764B2C
 .....
 00000
 .....
@@ -760,7 +760,7 @@ TargetLeftRight
 .....
 
 TargetUpLeft
-#E5DAC7
+#764B2C
 .0.0.
 00.0.
 ...0.
@@ -768,7 +768,7 @@ TargetUpLeft
 .....
 
 TargetUpRight
-#E5DAC7
+#764B2C
 .0.0.
 .0.00
 .0...
@@ -776,7 +776,7 @@ TargetUpRight
 .....
 
 TargetDownLeft
-#E5DAC7
+#764B2C
 .....
 0000.
 ...0.
@@ -784,7 +784,71 @@ TargetDownLeft
 .0.0.
 
 TargetDownRight
-#E5DAC7
+#764B2C
+.....
+.0000
+.0...
+.0.00
+.0.0.
+
+TargetCrossVerticalMatched
+#304e32
+.0.0.
+00.00
+.0.0.
+00.00
+.0.0.
+
+TargetCrossHorizontalMatched
+#304e32
+.0.0.
+00000
+.....
+00000
+.0.0.
+
+TargetUpDownMatched
+#304e32
+.0.0.
+.0.0.
+.0.0.
+.0.0.
+.0.0.
+
+TargetLeftRightMatched
+#304e32
+.....
+00000
+.....
+00000
+.....
+
+TargetUpLeftMatched
+#304e32
+.0.0.
+00.0.
+...0.
+0000.
+.....
+
+TargetUpRightMatched
+#304e32
+.0.0.
+.0.00
+.0...
+.0000
+.....
+
+TargetDownLeftMatched
+#304e32
+.....
+0000.
+...0.
+00.0.
+.0.0.
+
+TargetDownRightMatched
+#304e32
 .....
 .0000
 .0...
@@ -1868,6 +1932,8 @@ LowDeco = Low_v1 or Low_v2 or Low_v3
 HighDeco = High_v1 or High_v2 or High_v3
 Decoration = LowDeco or HighDeco
 
+TargetDeco = TargetCrossVerticalMatched or TargetCrossHorizontalMatched or TargetUpDownMatched or TargetLeftRightMatched or TargetUpLeftMatched or TargetUpRightMatched or TargetDownLeftMatched or TargetDownRightMatched
+
 WallDeco = Wall_v1 or Wall_v2 or Wall_v3
 
 
@@ -1957,6 +2023,7 @@ PlankDecoBelow
 
 
 Target
+TargetDeco
 
 (BelowDeco)
 
@@ -2548,14 +2615,15 @@ late [ BarrelTarget Barrel ] -> [ BarrelTarget Barrel WinConCrates ]
 
 late [ CrossTarget Overlay ] -> [ CrossTarget Overlay WinConCrosses ]
 
-late [ TargetCrossVertical Overlay HighUp ] -> [ TargetCrossVertical Overlay HighUp WinConRopes ]
-late [ TargetCrossHorizontal Overlay HighLeft ] -> [ TargetCrossHorizontal Overlay HighLeft WinConRopes ]
-late [ TargetUpDown HighUp HighDown ] -> [ TargetUpDown HighUp HighDown WinConRopes ]
-late [ TargetLeftRight HighLeft HighRight ] -> [ TargetLeftRight HighLeft HighRight WinConRopes ] 
-late [ TargetUpLeft HighUp HighLeft ] -> [ TargetUpLeft HighUp HighLeft WinConRopes ]
-late [ TargetUpRight HighUp HighRight ] -> [ TargetUpRight HighUp HighRight WinConRopes ]
-late [ TargetDownLeft HighDown HighLeft ] -> [ TargetDownLeft HighDown HighLeft WinConRopes ]
-late [ TargetDownRight HighDown HighRight ] -> [ TargetDownRight HighDown HighRight WinConRopes ]
+late [ TargetDeco ] -> [ ]
+late [ TargetCrossVertical Overlay HighUp ] -> [ TargetCrossVertical Overlay HighUp WinConRopes TargetCrossVerticalMatched ]
+late [ TargetCrossHorizontal Overlay HighLeft ] -> [ TargetCrossHorizontal Overlay HighLeft WinConRopes TargetCrossHorizontalMatched ]
+late [ TargetUpDown HighUp HighDown ] -> [ TargetUpDown HighUp HighDown WinConRopes TargetUpDownMatched ]
+late [ TargetLeftRight HighLeft HighRight ] -> [ TargetLeftRight HighLeft HighRight WinConRopes TargetLeftRightMatched ] 
+late [ TargetUpLeft HighUp HighLeft ] -> [ TargetUpLeft HighUp HighLeft WinConRopes TargetUpLeftMatched ]
+late [ TargetUpRight HighUp HighRight ] -> [ TargetUpRight HighUp HighRight WinConRopes TargetUpRightMatched ]
+late [ TargetDownLeft HighDown HighLeft ] -> [ TargetDownLeft HighDown HighLeft WinConRopes TargetDownLeftMatched ]
+late [ TargetDownRight HighDown HighRight ] -> [ TargetDownRight HighDown HighRight WinConRopes TargetDownRightMatched ]
 
 late [ Overlay no CrossTarget ] [ WinConCrosses ] -> [ Overlay ] [ ]
 
