@@ -2945,6 +2945,19 @@ message You can also click and drag ropes to deform them.
 #############
 #############
 
+###########
+###########
+####...####
+##╒─────┐##
+##│.o.o.│##
+##└─────┘##
+###.╓─┐.###
+####│*│####
+####│*│####
+####└─┘####
+###########
+###########
+
 message This is a rope target. It must be matched exactly by a rope.
 (Again no fancy rope manipulation required.)
 
