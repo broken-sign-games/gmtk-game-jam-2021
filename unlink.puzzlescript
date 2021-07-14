@@ -1817,6 +1817,7 @@ _ = BarrelTarget
 O = Crate
 U = Barrel
 W = Barrel and BarrelTarget
+Q = Crate and CrateTarget
 
 i = MovableAnchor and HighUp
 k = MovableAnchor and HighDown
@@ -1947,6 +1948,8 @@ WallDeco = Wall_v1 or Wall_v2 or Wall_v3
 └ = HighUp and HighRight
 ┐ = HighDown and HighLeft
 ┌ = HighDown and HighRight
+
+┓ = HighDown and HighLeft and CrateTarget
 
 ╒ = HighDown and HighRight and HighDown_v1_0 and HighRight_v1_0
 ╓ = HighDown and HighRight and HighDown_v2_0 and HighRight_v2_0
@@ -2835,7 +2838,7 @@ a...........
 ............
 ............
 
-message All hands on deck! Click and drag the crates.
+message All hands on deck! Click and drag the crates and barrels.
 (Basic mouse-based sokoban introduction)
 
 ###########
@@ -2850,8 +2853,26 @@ message All hands on deck! Click and drag the crates.
 ###########
 ###########
 
+###########
+###########
+##.#####o##
+##u.*_*..##
+##.#####o##
+###########
+###########
+
 message You can also click and drag ropes to deform them.
 (Doesn't require any fancy deformations of the rope)
+
+########
+########
+##╒┓####
+##└┘####
+##q...##
+##..o.##
+##..####
+########
+########
 
 ############
 ############
@@ -2881,21 +2902,21 @@ message You can also click and drag ropes to deform them.
 ###########
 ###########
 
-#############
-#############
-###.......###
-##.........##
-##......*..##
-##...╒─┐...##
-##...│r│...##
-##.╒─┿─┘...##
-##.│o│.....##
-##.└─┘.....##
-###.......###
-#############
-#############
+(Introduction to type 2 Reidemeister moves)
 
-message Barrels are like crates, but with fewer corners!
+###########
+###########
+####╒─┐####
+####│o│####
+##..└─┿─┐##
+##.*.w│*│##
+##..┌─┿─┘##
+####│o│####
+####└─┘####
+###########
+###########
+
+(We might need a clearer introduction here for pulling one rope over a bend in another.)
 
 ############
 ############
@@ -2910,19 +2931,19 @@ message Barrels are like crates, but with fewer corners!
 ############
 ############
 
-(Introduction to type 2 Reidemeister moves)
-
-###########
-###########
-####╒─┐####
-####│o│####
-##..└─┿─┐##
-##.*.w│*│##
-##..┌─┿─┘##
-####│o│####
-####└─┘####
-###########
-###########
+#############
+#############
+###.......###
+##.........##
+##......*..##
+##...╒─┐...##
+##...│r│...##
+##.╒─┿─┘...##
+##.│o│.....##
+##.└─┘.....##
+###.......###
+#############
+#############
 
 message This is a rope target. It must be matched exactly by a rope.
 (Again no fancy rope manipulation required.)
